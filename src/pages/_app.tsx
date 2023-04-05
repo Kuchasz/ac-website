@@ -17,8 +17,7 @@ const Menu = () => (
       {menuItems.map((mi) => (
         <a
           key={mi.name}
-          // href={mi.link}
-          href={"#"}
+          href={mi.link}
           className="mx-1 my-1 cursor-pointer self-center px-1 py-1 font-semibold uppercase text-gray-100 drop-shadow-sm transition-all hover:text-red-500 md:mx-4 md:my-3 md:px-4 md:py-3 md:text-lg"
         >
           {mi.name}
