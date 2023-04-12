@@ -35,7 +35,12 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div style={{ backgroundImage: "url('/main_background_photo.jpg')" }} className="flex w-full flex-grow flex-col items-center bg-cover bg-center bg-no-repeat">
+      <div
+        style={{
+          backgroundImage: "url('/main_background_photo.jpg')",
+        }}
+        className="flex w-full flex-grow flex-col items-center bg-cover bg-center bg-no-repeat"
+      >
         <Menu />
         <Component {...pageProps} />
       </div>
