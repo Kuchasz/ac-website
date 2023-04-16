@@ -5,16 +5,14 @@ import img2 from "../../public/landing_page/IMG_3796.jpg";
 import img3 from "../../public/landing_page/andrewcore22.png";
 import img4 from "../../public/landing_page/DSC04780.jpg";
 import Image from "next/image";
-
+import logoWhite from "../../public/logo_white.png";
 
 const Home: NextPage = () => {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       <main className="flex min-h-[calc(100%-144px)] w-full flex-col items-center justify-center">
         <div className="grid grid-cols-3">
-          <h1 className="text-white">
-            <img src="/logo_white.png" className="h-64"></img>
-          </h1>
+          <Image alt="logo" className="col-start-2" src={logoWhite}></Image>
         </div>
       </main>
       <main className="flex h-64 min-h-full w-full flex-col items-center justify-center text-white">
