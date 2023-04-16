@@ -15,7 +15,7 @@ const Home: NextPage = () => {
           <Image alt="logo" className="col-start-2" src={logoWhite}></Image>
         </div>
       </main>
-      <main className="flex  w-full flex-col items-center justify-center text-white">
+      <main className="flex my-24 w-full flex-col items-center justify-center text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             BIO.
@@ -71,7 +71,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <main className="flex h-64 min-h-full w-full flex-col items-center justify-center text-white">
+      <main className="flex w-full my-24 flex-col items-center justify-center text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             DISCOGRAPHY.
@@ -114,7 +114,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <main className="flex h-64 min-h-full w-full flex-col items-center justify-center text-white">
+      <main className="flex w-full my-24 flex-col items-center justify-center text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             CONTACT.
