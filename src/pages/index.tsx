@@ -9,10 +9,10 @@ import Image from "next/image";
 
 const Home: NextPage = () => {
   return (
-    <div className="flex flex-col">
-      <main className="flex min-h-full flex-col items-center justify-center">
+    <div className="flex flex-col w-full">
+      <main className="flex min-h-[calc(100%-144px)] w-full flex-col items-center justify-center">
         <div className="grid grid-cols-3">
-          <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
+          <h1 className="text-white">
             <img src="/logo_white.png" className="h-64"></img>
           </h1>
         </div>

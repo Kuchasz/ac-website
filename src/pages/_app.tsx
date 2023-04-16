@@ -65,7 +65,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         style={{
           backgroundImage: "url('/main_background_photo.jpg')",
         }}
-        className="flex w-full flex-grow flex-col items-center bg-cover bg-center bg-no-repeat"
+        className="flex w-full flex-grow flex-col items-center bg-cover bg-top bg-no-repeat"
       >
         <div className="flex w-full justify-between bg-black px-6 py-6">
           <Menu />
