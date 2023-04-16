@@ -6,6 +6,7 @@ import img3 from "../../public/landing_page/andrewcore22.png";
 import img4 from "../../public/landing_page/DSC04780.jpg";
 import Image from "next/image";
 
+
 const Home: NextPage = () => {
   return (
     <div className="flex flex-col">
@@ -16,7 +17,7 @@ const Home: NextPage = () => {
           </h1>
         </div>
       </main>
-      <main className="flex h-64 min-h-full w-full flex-col items-center justify-center bg-black text-white">
+      <main className="flex h-64 min-h-full w-full flex-col items-center justify-center text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             BIO.
@@ -40,15 +41,39 @@ const Home: NextPage = () => {
               tech-house, house oraz techno.
             </span>
             <div className="grid grid-cols-2 grid-rows-2">
-              <div><Image className="object-cover max-h-56 max-w-56 p-1 rounded-lg object-center h-full w-full" src={img1} alt=""></Image></div>
-              <div><Image className="object-cover max-h-56 max-w-56 p-1 rounded-lg object-center h-full w-full" src={img2} alt=""></Image></div>
-              <div><Image className="object-cover max-h-56 max-w-56 p-1 rounded-lg object-center h-full w-full" src={img3} alt=""></Image></div>
-              <div><Image className="object-cover max-h-56 max-w-56 p-1 rounded-lg object-center h-full w-full" src={img4} alt=""></Image></div>
+              <div>
+                <Image
+                  className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                  src={img1}
+                  alt=""
+                ></Image>
+              </div>
+              <div>
+                <Image
+                  className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                  src={img2}
+                  alt=""
+                ></Image>
+              </div>
+              <div>
+                <Image
+                  className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                  src={img3}
+                  alt=""
+                ></Image>
+              </div>
+              <div>
+                <Image
+                  className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                  src={img4}
+                  alt=""
+                ></Image>
+              </div>
             </div>
           </div>
         </div>
       </main>
-      <main className="flex h-64 min-h-full w-full flex-col items-center justify-center bg-black text-white">
+      <main className="flex h-64 min-h-full w-full flex-col items-center justify-center text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             DISCOGRAPHY.
@@ -88,6 +113,16 @@ const Home: NextPage = () => {
                 title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
               />
             </span>
+          </div>
+        </div>
+      </main>
+      <main className="flex h-64 min-h-full w-full flex-col items-center justify-center text-white">
+        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
+            CONTACT.
+          </h1>
+          <div className="">
+            <span>typicaltwins@gmail.com</span>
           </div>
         </div>
       </main>
