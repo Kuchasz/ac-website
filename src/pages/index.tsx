@@ -12,7 +12,7 @@ const Home: NextPage = () => {
     <div className="flex w-full flex-col">
       <main className="flex min-h-[calc(100vh-72px)] w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat" style={{backgroundImage: 'url(/main_background_photo.jpg)'}}>
         <div className="grid grid-cols-3">
-          <Image alt="logo" className="col-start-2" src={logoWhite}></Image>
+          <Image alt="logo" className="col-start-2 max-h-[30vh] object-center object-contain" src={logoWhite}></Image>
         </div>
       </main>
       <main className="flex my-24 w-full flex-col items-center justify-center text-white">
