@@ -16,6 +16,21 @@ const movies = [
   { youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo" },
 ];
 
+const news = [
+  {
+    youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo",
+    title: "Lorem, ipsum dolor sit amet consectetur adipisicing elit",
+    content:
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita quisquam aliquid deleniti id. Quos nam dolore qui similique non neque tempore, cum ipsum totam facere porro odio asperiores aspernatur officia.",
+  },
+  {
+    youtubeUrl: "https://www.youtube.com/embed/ljF337Y8544",
+    title: "Sequi ea veniam a ipsam, necessitatibus cum error",
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam temporibus animi consequatur. Reprehenderit labore ad iste sed eveniet fuga porro totam, esse quis optio rem incidunt quasi quos facilis aliquam?",
+  },
+];
+
 const Home: NextPage = () => {
   return (
     <div className="flex w-full flex-col">
@@ -147,6 +162,41 @@ const Home: NextPage = () => {
               date="2023-03-31"
               title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
             />
+          </div>
+        </div>
+      </main>
+      <main
+        id="news"
+        className="my-24 flex min-h-[50vh] w-full flex-col items-center justify-center text-white"
+      >
+        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
+            NEWS.
+          </h1>
+          <div className="flex flex-col items-center">
+            <div className="flex flex-col justify-center gap-x-4">
+              {news.map((v) => (
+                <Link
+                  key={v.youtubeUrl}
+                  href={`/video/${getYoutubeId(v.youtubeUrl)}`}
+                  className="flex"
+                >
+                  <img
+                    className="max-w-[20rem] cursor-pointer brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0"
+                    src={getThumbByVideoUrl(v.youtubeUrl)}
+                  ></img>
+                  <div className="ml-4 flex flex-col justify-center">
+                    <div className="text-lg">{v.title}</div>
+                    <div className="text-xs">{v.content}</div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            {/* <Link href="/videos">
+              <button className="border-1 mt-8 rounded-md border px-6 py-2 hover:bg-gray-700">
+                {translations.seeMore}
+              </button>
+            </Link> */}
           </div>
         </div>
       </main>
