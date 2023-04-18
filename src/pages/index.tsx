@@ -12,7 +12,7 @@ import { Navigation } from "./_app";
 const Home: NextPage = () => {
   return (
     <main className="flex h-full w-full text-white">
-      <Parallax pages={3}>
+      <Parallax pages={4}>
         <ParallaxLayer sticky={{ start: 0, end: 3 }}>
           <Navigation />
         </ParallaxLayer>
