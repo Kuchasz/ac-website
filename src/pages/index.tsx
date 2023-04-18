@@ -31,7 +31,10 @@ const Home: NextPage = () => {
           ></Image>
         </div>
       </main>
-      <main id="bio " className="my-24 min-h-[50vh] flex w-full flex-col items-center justify-center text-white">
+      <main
+        id="bio "
+        className="my-24 flex min-h-[50vh] w-full flex-col items-center justify-center text-white"
+      >
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             BIO.
@@ -87,56 +90,76 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <main id="discography" className="my-24 min-h-[50vh] flex w-full flex-col items-center justify-center text-white">
+      <main
+        id="discography"
+        className="my-24 flex min-h-[50vh] w-full flex-col items-center justify-center text-white"
+      >
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             DISCOGRAPHY.
           </h1>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            <span>
-              <DiscographyEntry
-                date="2023-05-01"
-                title="Andrew Core – Space Trumpet EP [Datatech]"
-              />
-              <DiscographyEntry
-                date="2023-03-31"
-                title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
-              />
-              <DiscographyEntry
-                date="2023-05-01"
-                title="Andrew Core – Space Trumpet EP [Datatech]"
-              />
-              <DiscographyEntry
-                date="2023-03-31"
-                title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
-              />
-              <DiscographyEntry
-                date="2023-05-01"
-                title="Andrew Core – Space Trumpet EP [Datatech]"
-              />
-              <DiscographyEntry
-                date="2023-03-31"
-                title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
-              />
-              <DiscographyEntry
-                date="2023-05-01"
-                title="Andrew Core – Space Trumpet EP [Datatech]"
-              />
-              <DiscographyEntry
-                date="2023-03-31"
-                title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
-              />
-            </span>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <DiscographyEntry
+              date="2023-05-01"
+              title="Andrew Core – Space Trumpet EP [Datatech]"
+            />
+            <DiscographyEntry
+              date="2023-03-31"
+              title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
+            />
+            <DiscographyEntry
+              date="2023-05-01"
+              title="Andrew Core – Space Trumpet EP [Datatech]"
+            />
+            <DiscographyEntry
+              date="2023-03-31"
+              title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
+            />
+            <DiscographyEntry
+              date="2023-05-01"
+              title="Andrew Core – Space Trumpet EP [Datatech]"
+            />
+            <DiscographyEntry
+              date="2023-03-31"
+              title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
+            />{" "}
+            <DiscographyEntry
+              date="2023-05-01"
+              title="Andrew Core – Space Trumpet EP [Datatech]"
+            />
+            <DiscographyEntry
+              date="2023-03-31"
+              title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
+            />
+            <DiscographyEntry
+              date="2023-05-01"
+              title="Andrew Core – Space Trumpet EP [Datatech]"
+            />
+            <DiscographyEntry
+              date="2023-03-31"
+              title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
+            />
+            <DiscographyEntry
+              date="2023-05-01"
+              title="Andrew Core – Space Trumpet EP [Datatech]"
+            />
+            <DiscographyEntry
+              date="2023-03-31"
+              title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
+            />
           </div>
         </div>
       </main>
-      <main id="music" className="my-24 min-h-[50vh] flex w-full flex-col items-center justify-center text-white">
+      <main
+        id="music"
+        className="my-24 flex min-h-[50vh] w-full flex-col items-center justify-center text-white"
+      >
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             MUSIC.
           </h1>
           <div className="flex flex-col items-center">
-            <div className="flex gap-x-4 flex-wrap justify-center">
+            <div className="flex flex-wrap justify-center gap-x-4">
               {movies.map((v) => (
                 <Link
                   key={v.youtubeUrl}
@@ -157,7 +180,10 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <main id="contact" className="my-24 min-h-[50vh] flex w-full flex-col items-center justify-center text-white">
+      <main
+        id="contact"
+        className="my-24 flex min-h-[50vh] w-full flex-col items-center justify-center text-white"
+      >
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             CONTACT.
