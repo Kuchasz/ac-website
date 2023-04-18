@@ -1,4 +1,3 @@
-// components/ScrollLink.tsx
 import Link, { LinkProps } from "next/link";
 import React, { PropsWithChildren } from "react";
 
