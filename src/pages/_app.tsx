@@ -14,27 +14,44 @@ const menuItems = [
 ] as const;
 
 const socialItems = [
-  { icon: "icons/soundcloud.svg", link: "https://soundcloud.com/andrewcoremusic" },
-  { icon: "icons/youtube.svg", link: "https://www.youtube.com/@andrewcoremusic" },
-  { icon: "icons/instagram.svg", link: "https://www.instagram.com/andrewcore20/" },
-  { icon: "icons/tiktok.svg", link: "https://www.tiktok.com/@andrewcoremusic" },
-  { icon: "icons/linktree.svg", link: "https://linktr.ee/andrewcoremusic" },
-  { icon: "icons/beatport.svg", link: "https://www.beatport.com/artist/andrew-core/90019" },
+  {
+    icon: "/icons/soundcloud.svg",
+    link: "https://soundcloud.com/andrewcoremusic",
+  },
+  {
+    icon: "/icons/youtube.svg",
+    link: "https://www.youtube.com/@andrewcoremusic",
+  },
+  {
+    icon: "/icons/instagram.svg",
+    link: "https://www.instagram.com/andrewcore20/",
+  },
+  {
+    icon: "/icons/tiktok.svg",
+    link: "https://www.tiktok.com/@andrewcoremusic",
+  },
+  { icon: "/icons/linktree.svg", link: "https://linktr.ee/andrewcoremusic" },
+  {
+    icon: "/icons/beatport.svg",
+    link: "https://www.beatport.com/artist/andrew-core/90019",
+  },
 ];
 
-const Menu = () => (
-  <div className="flex flex-row flex-wrap gap-6">
-    {menuItems.map((mi) => (
-      <a
-        key={mi.name}
-        href={mi.link}
-        className="cursor-pointer self-center font-semibold uppercase text-gray-100 drop-shadow-sm transition-all hover:text-red-500"
-      >
-        {mi.name}
-      </a>
-    ))}
-  </div>
-);
+const Menu = () => {
+  return (
+    <div className="flex flex-row flex-wrap gap-6">
+      {menuItems.map((mi) => (
+        <a
+          key={mi.name}
+          href={mi.link}
+          className="cursor-pointer self-center font-semibold uppercase text-gray-100 drop-shadow-sm transition-all hover:text-red-500"
+        >
+          {mi.name}
+        </a>
+      ))}
+    </div>
+  );
+};
 
 const Social = () => (
   <div className="flex flex-row flex-wrap gap-6">
@@ -60,6 +77,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
           <Social />
         </div>
         <Component {...pageProps} />
+        <footer className="py-8 text-center w-full text-sm text-white">
+        {`© ${new Date().getFullYear()} andrewcoremusic.com All Rights Reserved`}
+      </footer>
       </div>
     </>
   );
