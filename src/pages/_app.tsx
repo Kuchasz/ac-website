@@ -40,7 +40,7 @@ const socialItems = [
 
 const Menu = () => {
   return (
-    <div className="flex flex-row flex-wrap gap-6">
+    <div className="flex flex-row flex-wrap gap-3 md:gap-6">
       {menuItems.map((mi) => (
         <ScrollLink
           key={mi.name}
