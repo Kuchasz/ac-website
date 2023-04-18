@@ -31,7 +31,7 @@ const Home: NextPage = () => {
           ></Image>
         </div>
       </main>
-      <main className="my-24 flex w-full flex-col items-center justify-center text-white">
+      <main id="bio " className="my-24 min-h-[50vh] flex w-full flex-col items-center justify-center text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             BIO.
@@ -87,7 +87,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <main className="my-24 flex w-full flex-col items-center justify-center text-white">
+      <main id="discography" className="my-24 min-h-[50vh] flex w-full flex-col items-center justify-center text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             DISCOGRAPHY.
@@ -130,7 +130,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <main className="my-24 flex w-full flex-col items-center justify-center text-white">
+      <main id="music" className="my-24 min-h-[50vh] flex w-full flex-col items-center justify-center text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             MUSIC.
@@ -157,7 +157,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <main className="my-24 flex w-full flex-col items-center justify-center text-white">
+      <main id="contact" className="my-24 min-h-[50vh] flex w-full flex-col items-center justify-center text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             CONTACT.

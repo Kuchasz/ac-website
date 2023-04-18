@@ -6,11 +6,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 const menuItems = [
-  { name: "bio", link: "/bio" },
-  { name: "discography", link: "/discography" },
-  { name: "music", link: "/music" },
+  { name: "bio", link: "#bio" },
+  { name: "discography", link: "#discography" },
+  { name: "music", link: "#music" },
   { name: "news", link: "/news" },
-  { name: "contact", link: "/contact" },
+  { name: "contact", link: "#contact" },
 ] as const;
 
 const socialItems = [
