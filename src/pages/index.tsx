@@ -182,7 +182,7 @@ const Home: NextPage = () => {
                   className="flex"
                 >
                   <img
-                    className="max-w-[20rem] cursor-pointer brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0"
+                    className="max-w-[10rem] md:max-w-[20rem] object-cover cursor-pointer brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0"
                     src={getThumbByVideoUrl(v.youtubeUrl)}
                   ></img>
                   <div className="ml-4 flex flex-col justify-center">
