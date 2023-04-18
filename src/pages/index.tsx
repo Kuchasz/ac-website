@@ -6,16 +6,32 @@ import img3 from "../../public/landing_page/andrewcore22.png";
 import img4 from "../../public/landing_page/DSC04780.jpg";
 import Image from "next/image";
 import logoWhite from "../../public/logo_white.png";
+import { getThumbByVideoUrl, getYoutubeId } from "~/yt-helpers";
+import Link from "next/link";
+
+const movies = [
+  { youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo" },
+  { youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo" },
+  { youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo" },
+  { youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo" },
+];
 
 const Home: NextPage = () => {
   return (
     <div className="flex w-full flex-col">
-      <main className="flex min-h-[100vh] w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat" style={{backgroundImage: 'url(/main_background_photo.jpg)'}}>
+      <main
+        className="flex min-h-[100vh] w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat"
+        style={{ backgroundImage: "url(/main_background_photo.jpg)" }}
+      >
         <div className="grid grid-cols-3">
-          <Image alt="logo" className="col-start-2 max-h-[30vh] object-center object-contain" src={logoWhite}></Image>
+          <Image
+            alt="logo"
+            className="col-start-2 max-h-[30vh] object-contain object-center"
+            src={logoWhite}
+          ></Image>
         </div>
       </main>
-      <main className="flex my-24 w-full flex-col items-center justify-center text-white">
+      <main className="my-24 flex w-full flex-col items-center justify-center text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             BIO.
@@ -71,7 +87,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <main className="flex w-full my-24 flex-col items-center justify-center text-white">
+      <main className="my-24 flex w-full flex-col items-center justify-center text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             DISCOGRAPHY.
@@ -114,7 +130,34 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
-      <main className="flex w-full my-24 flex-col items-center justify-center text-white">
+      <main className="my-24 flex w-full flex-col items-center justify-center text-white">
+        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
+            MUSIC.
+          </h1>
+          <div className="flex flex-col items-center">
+            <div className="flex gap-x-4 flex-wrap justify-center">
+              {movies.map((v) => (
+                <Link
+                  key={v.youtubeUrl}
+                  href={`/video/${getYoutubeId(v.youtubeUrl)}`}
+                >
+                  <img
+                    className="max-w-[15rem] cursor-pointer brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0"
+                    src={getThumbByVideoUrl(v.youtubeUrl)}
+                  ></img>
+                </Link>
+              ))}
+            </div>
+            {/* <Link href="/videos">
+              <button className="border-1 mt-8 rounded-md border px-6 py-2 hover:bg-gray-700">
+                {translations.seeMore}
+              </button>
+            </Link> */}
+          </div>
+        </div>
+      </main>
+      <main className="my-24 flex w-full flex-col items-center justify-center text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             CONTACT.
