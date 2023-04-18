@@ -72,7 +72,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex w-full flex-grow flex-col items-center">
-        <div className="flex w-full justify-between bg-black px-6 py-6">
+        <div className="flex fixed w-full justify-between bg-black px-6 py-6">
           <Menu />
           <Social />
         </div>
