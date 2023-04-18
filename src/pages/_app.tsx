@@ -63,13 +63,6 @@ const Social = () => (
   </div>
 );
 
-export const Navigation = () => (
-  <div className="flex w-full justify-between bg-black px-6 py-6">
-    <Menu />
-    <Social />
-  </div>
-);
-
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
@@ -79,10 +72,14 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex w-full flex-grow flex-col items-center">
+        <div className="flex w-full justify-between bg-black px-6 py-6">
+          <Menu />
+          <Social />
+        </div>
         <Component {...pageProps} />
-        {/* <footer className="py-8 text-center w-full text-sm text-white">
+        <footer className="py-8 text-center w-full text-sm text-white">
         {`© ${new Date().getFullYear()} andrewcoremusic.com All Rights Reserved`}
-      </footer> */}
+      </footer>
       </div>
     </>
   );
