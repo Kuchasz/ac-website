@@ -7,10 +7,10 @@ import Link from "next/link";
 import { ScrollLink } from "~/components/scroll-link";
 
 const menuItems = [
-  { name: "bio", link: "#bio" },
+  { name: "bio", link: "#bio" },  
   { name: "discography", link: "#discography" },
-  { name: "music", link: "#music" },
   { name: "news", link: "#news" },
+  { name: "music", link: "#music" },
   { name: "contact", link: "#contact" },
 ] as const;
 
