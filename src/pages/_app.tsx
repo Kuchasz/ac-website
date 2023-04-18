@@ -10,7 +10,7 @@ const menuItems = [
   { name: "bio", link: "#bio" },
   { name: "discography", link: "#discography" },
   { name: "music", link: "#music" },
-  { name: "news", link: "/news" },
+  { name: "news", link: "#news" },
   { name: "contact", link: "#contact" },
 ] as const;
 
