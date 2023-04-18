@@ -32,7 +32,7 @@ const Home: NextPage = () => {
         </div>
       </main>
       <main
-        id="bio "
+        id="bio"
         className="my-24 flex min-h-[50vh] w-full flex-col items-center justify-center text-white"
       >
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">

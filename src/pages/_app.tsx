@@ -4,6 +4,7 @@ import Head from "next/head";
 import "~/styles/globals.css";
 import Image from "next/image";
 import Link from "next/link";
+import { ScrollLink } from "~/components/scroll-link";
 
 const menuItems = [
   { name: "bio", link: "#bio" },
@@ -41,13 +42,13 @@ const Menu = () => {
   return (
     <div className="flex flex-row flex-wrap gap-6">
       {menuItems.map((mi) => (
-        <a
+        <ScrollLink
           key={mi.name}
           href={mi.link}
           className="cursor-pointer self-center font-semibold uppercase text-gray-100 drop-shadow-sm transition-all hover:text-red-500"
         >
           {mi.name}
-        </a>
+        </ScrollLink>
       ))}
     </div>
   );
@@ -72,14 +73,15 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex w-full flex-grow flex-col items-center">
-        <div className="flex fixed w-full z-10 justify-between bg-black px-6 py-6">
+        <div className="fixed z-10 flex w-full justify-between bg-black px-6 py-6">
           <Menu />
           <Social />
         </div>
         <Component {...pageProps} />
-        <footer className="py-8 text-center w-full text-sm text-white">
-        {`© ${new Date().getFullYear()} andrewcoremusic.com All Rights Reserved`}
-      </footer>
+        <footer className="w-full py-8 text-center text-sm text-white">
+          <div>{`© ${new Date().getFullYear()} andrewcoremusic.com`}</div>
+          <div className="text-gray-700">All Rights Reserved</div>
+        </footer>
       </div>
     </>
   );
