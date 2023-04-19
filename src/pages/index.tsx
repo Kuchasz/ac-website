@@ -8,12 +8,16 @@ import Image from "next/image";
 import logoWhite from "../../public/logo_white.png";
 import { getThumbByVideoUrl, getYoutubeId } from "~/yt-helpers";
 import Link from "next/link";
+import {
+  MouseParallaxChild,
+  MouseParallaxContainer,
+} from "react-parallax-mouse";
 
 const movies = [
   { youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo" },
-  { youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo" },
-  { youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo" },
-  { youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo" },
+  { youtubeUrl: "https://www.youtube.com/embed/ljF337Y8544" },
+  { youtubeUrl: "https://www.youtube.com/embed/0654SQ29CQA" },
+  { youtubeUrl: "https://www.youtube.com/embed/XpjMx2GDCIk" },
 ];
 
 const news = [
@@ -34,7 +38,33 @@ const news = [
 const Home: NextPage = () => {
   return (
     <div className="flex w-full flex-col">
-      <main
+      <MouseParallaxContainer className="flex min-h-[100vh] w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat">
+       
+        <MouseParallaxChild
+          factorX={0.05}
+          factorY={0.05}
+          style={{
+            backgroundImage: "url(/main_background_photo.jpg)",
+            width: "100%",
+            height: "100%",
+            transform: "scale(1.1)",
+            position: "absolute",
+            backgroundSize: "fill",
+            backgroundRepeat: "repeat",
+            backgroundPosition: "center",
+          }}
+        ></MouseParallaxChild>
+        <MouseParallaxChild factorX={0.1} factorY={0.1}>
+          <div className="grid grid-cols-3">
+            <Image
+              alt="logo"
+              className="col-start-2 max-h-[30vh] object-contain object-center"
+              src={logoWhite}
+            ></Image>
+          </div>
+        </MouseParallaxChild>
+      </MouseParallaxContainer>
+      {/* <main
         className="flex min-h-[100vh] w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat"
         style={{ backgroundImage: "url(/main_background_photo.jpg)" }}
       >
@@ -45,7 +75,7 @@ const Home: NextPage = () => {
             src={logoWhite}
           ></Image>
         </div>
-      </main>
+      </main> */}
       <main
         id="bio"
         className="my-24 flex min-h-[50vh] w-full flex-col items-center justify-center text-white"
@@ -182,7 +212,7 @@ const Home: NextPage = () => {
                   className="flex"
                 >
                   <img
-                    className="max-w-[10rem] md:max-w-[20rem] object-cover cursor-pointer brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0"
+                    className="max-w-[10rem] cursor-pointer object-cover brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0 md:max-w-[20rem]"
                     src={getThumbByVideoUrl(v.youtubeUrl)}
                   ></img>
                   <div className="ml-4 flex flex-col justify-center">
