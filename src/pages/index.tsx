@@ -4,6 +4,7 @@ import img1 from "../../public/landing_page/Andrew Core.jpg";
 import img2 from "../../public/landing_page/IMG_3796.jpg";
 import img3 from "../../public/landing_page/andrewcore22.png";
 import img4 from "../../public/landing_page/DSC04780.jpg";
+import andrew from "../../public/landing_page/andrew.png";
 import Image from "next/image";
 import logoWhite from "../../public/logo_white.png";
 import { getThumbByVideoUrl, getYoutubeId } from "~/yt-helpers";
@@ -39,12 +40,12 @@ const Home: NextPage = () => {
   return (
     <div className="flex w-full flex-col">
       <MouseParallaxContainer className="flex min-h-[100vh] w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat">
-       
         <MouseParallaxChild
-          factorX={0.05}
-          factorY={0.05}
+          factorX={0.01}
+          factorY={0.01}
           style={{
-            backgroundImage: "url(/main_background_photo.jpg)",
+            backgroundImage:
+              "radial-gradient(circle at 25% 25%, rgba(40,40,40,1) 0%, rgba(0,0,0,1) 50%)",
             width: "100%",
             height: "100%",
             transform: "scale(1.1)",
@@ -54,7 +55,17 @@ const Home: NextPage = () => {
             backgroundPosition: "center",
           }}
         ></MouseParallaxChild>
-        <MouseParallaxChild factorX={0.1} factorY={0.1}>
+        <MouseParallaxChild factorX={0.07} factorY={0.07} className="font-thin absolute h-full grid grid-rows-5">
+          <span className="row-start-2 translate-x-[-25%] translate-y-[-25%] uppercase opacity-10 text-white text-6xl">electronic music producer</span>
+        </MouseParallaxChild>
+        <MouseParallaxChild factorX={0.1} factorY={0.1} className="flex h-full items-end">
+          <Image
+            alt="logo"
+            className="scale-125 ml-48 max-h-[75vh] object-contain"
+            src={andrew}
+          ></Image>
+        </MouseParallaxChild>
+        <MouseParallaxChild factorX={0.15} factorY={0.15} className="absolute">
           <div className="grid grid-cols-3">
             <Image
               alt="logo"
