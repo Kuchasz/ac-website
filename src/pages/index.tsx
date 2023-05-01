@@ -1,5 +1,4 @@
-import { type NextPage } from "next";
-import { DiscographyEntry } from "~/components/discography-entry";
+import { DisplayDiscographyEntry } from "~/components/display-discography-entry";
 import img1 from "../../public/landing_page/Andrew Core.jpg";
 import img2 from "../../public/landing_page/IMG_3796.jpg";
 import img3 from "../../public/landing_page/andrewcore22.png";
@@ -17,8 +16,12 @@ import { api } from "~/api";
 import {
   DiscographyEntryOrderByInput,
   Language,
+  NewsEntryOrderByInput,
   VideoOrderByInput,
 } from "~/gql";
+import { NewsEntry } from "~/gql";
+import { Video } from "~/gql";
+import { DiscographyEntry } from "~/gql";
 
 const news = [
   {
@@ -39,10 +42,12 @@ const Home = ({
   bio,
   discography,
   videos,
+  news
 }: {
   bio: string;
-  discography: { title: string; releaseDate: string }[];
-  videos: { youtubeUrl: string }[];
+  discography: DiscographyEntry[];
+  videos: Video[];
+  news: NewsEntry[];
 }) => {
   return (
     <div className="flex w-full flex-col">
@@ -137,7 +142,7 @@ const Home = ({
           </h1>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             {discography.map((d) => (
-              <DiscographyEntry
+              <DisplayDiscographyEntry
                 key={d.title}
                 date={d.releaseDate}
                 title={d.title}
@@ -158,17 +163,17 @@ const Home = ({
             <div className="flex flex-col justify-center gap-x-4">
               {news.map((v) => (
                 <Link
-                  key={v.youtubeUrl}
-                  href={`/video/${getYoutubeId(v.youtubeUrl)}`}
+                  key={v.title}
+                  href={`/news/${getYoutubeId(v.id)}`}
                   className="flex"
                 >
                   <img
                     className="max-w-[10rem] cursor-pointer object-cover brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0 md:max-w-[20rem]"
-                    src={getThumbByVideoUrl(v.youtubeUrl)}
+                    src={v.photo.url}
                   ></img>
                   <div className="ml-4 flex flex-col justify-center">
                     <div className="text-lg">{v.title}</div>
-                    <div className="text-xs">{v.content}</div>
+                    <div className="text-xs">{v.content.text.slice(0, 150)}...</div>
                   </div>
                 </Link>
               ))}
@@ -246,11 +251,14 @@ export async function getStaticProps({ locale }: { locale: string }) {
     content: { html: bio },
   } = siteContent!;
 
+  const { newsEntries } = await api.newsEntries({ orderBy: NewsEntryOrderByInput.CreatedAtDesc });
+
   return {
     props: {
       bio,
       discography: discographyEntries,
       videos,
+      news: newsEntries
     },
     revalidate: 10,
   };
