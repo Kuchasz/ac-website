@@ -17,6 +17,7 @@ import {
   DiscographyEntryOrderByInput,
   Language,
   NewsEntryOrderByInput,
+  Scalars,
   VideoOrderByInput,
 } from "~/gql";
 import { NewsEntry } from "~/gql";
@@ -129,7 +130,7 @@ const Home = ({
             {discography.map((d) => (
               <DisplayDiscographyEntry
                 key={d.title}
-                date={d.releaseDate}
+                date={d.releaseDate as unknown as string}
                 title={d.title}
               />
             ))}
@@ -218,7 +219,7 @@ const Home = ({
   );
 };
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export async function getStaticProps() {
   const { discographyEntries } = await api.discographyEntries({
     orderBy: DiscographyEntryOrderByInput.ReleaseDateDesc,
   });
