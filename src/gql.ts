@@ -5552,6 +5552,13 @@ export type NewsEntriesQueryVariables = Exact<{
 
 export type NewsEntriesQuery = { __typename?: 'Query', newsEntries: Array<{ __typename?: 'NewsEntry', id: string, title: string, photo: { __typename?: 'Asset', url: string }, content: { __typename?: 'RichText', html: string, text: string } }> };
 
+export type NewsEntryQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type NewsEntryQuery = { __typename?: 'Query', newsEntry?: { __typename?: 'NewsEntry', title: string, photo: { __typename?: 'Asset', url: string }, content: { __typename?: 'RichText', html: string } } | null };
+
 export type VideosQueryVariables = Exact<{
   orderBy?: InputMaybe<VideoOrderByInput>;
   first?: InputMaybe<Scalars['Int']>;
@@ -5598,6 +5605,19 @@ export const NewsEntriesDocument = gql`
   }
 }
     `;
+export const NewsEntryDocument = gql`
+    query newsEntry($id: ID) {
+  newsEntry(where: {id: $id}) {
+    title
+    photo {
+      url
+    }
+    content {
+      html
+    }
+  }
+}
+    `;
 export const VideosDocument = gql`
     query videos($orderBy: VideoOrderByInput, $first: Int) {
   videos(orderBy: $orderBy, first: $first) {
@@ -5621,6 +5641,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     newsEntries(variables?: NewsEntriesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<NewsEntriesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<NewsEntriesQuery>(NewsEntriesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'newsEntries', 'query');
+    },
+    newsEntry(variables?: NewsEntryQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<NewsEntryQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<NewsEntryQuery>(NewsEntryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'newsEntry', 'query');
     },
     videos(variables?: VideosQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<VideosQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<VideosQuery>(VideosDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'videos', 'query');

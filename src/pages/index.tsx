@@ -149,7 +149,7 @@ const Home = ({
               {news.map((v) => (
                 <Link
                   key={v.title}
-                  href={`/news/${getYoutubeId(v.id)}`}
+                  href={`/news/${v.id}`}
                   className="flex"
                 >
                   <img

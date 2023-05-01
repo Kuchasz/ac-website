@@ -11,3 +11,15 @@ query newsEntries($orderBy: NewsEntryOrderByInput) {
     }
   }
 }
+
+query newsEntry($id: ID) {
+  newsEntry(where: {id: $id}) {
+    title
+    photo {
+      url
+    }
+    content {
+      html
+    }
+  }
+}
