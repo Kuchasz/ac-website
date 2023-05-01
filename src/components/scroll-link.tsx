@@ -1,4 +1,5 @@
 import Link, { LinkProps } from "next/link";
+import { useRouter } from "next/router";
 import React, { PropsWithChildren } from "react";
 
 type AnchorProps = Omit<
@@ -8,7 +9,10 @@ type AnchorProps = Omit<
 type ScrollLinkProps = AnchorProps & LinkProps & PropsWithChildren;
 
 export const ScrollLink = ({ children, ...props }: ScrollLinkProps) => {
+  const isHomeSite = useRouter().asPath === "/";
+
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    if (!isHomeSite) return;
     e.preventDefault();
     const targetId = e.currentTarget.href.replace(/.*\#/, "");
     const elem = document.getElementById(targetId);
