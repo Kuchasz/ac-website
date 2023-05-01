@@ -17,7 +17,6 @@ import {
   DiscographyEntryOrderByInput,
   Language,
   NewsEntryOrderByInput,
-  Scalars,
   VideoOrderByInput,
 } from "~/gql";
 import { NewsEntry } from "~/gql";
@@ -54,17 +53,17 @@ const Home = ({
           }}
         ></MouseParallaxChild>
         <MouseParallaxChild
-          factorX={0.07}
-          factorY={0.07}
+          factorX={0.2}
+          factorY={0.2}
           className="absolute grid h-full grid-rows-5 font-thin"
         >
-          <span className="row-start-2 translate-x-[-25%] translate-y-[-25%] text-6xl uppercase text-white opacity-10">
+          <span className="row-start-2 translate-y-[-25%] animate-pulse text-6xl uppercase text-white opacity-10">
             electronic music producer
           </span>
         </MouseParallaxChild>
         <MouseParallaxChild
-          factorX={0.1}
-          factorY={0.1}
+          factorX={0.07}
+          factorY={0.07}
           className="flex h-full items-end"
         >
           <Image
@@ -73,7 +72,7 @@ const Home = ({
             src={andrew}
           ></Image>
         </MouseParallaxChild>
-        <MouseParallaxChild factorX={0.15} factorY={0.15} className="absolute">
+        <MouseParallaxChild factorX={0.05} factorY={0.05} className="absolute">
           <div className="grid grid-cols-3">
             <Image
               alt="logo"
@@ -164,11 +163,6 @@ const Home = ({
                 </Link>
               ))}
             </div>
-            {/* <Link href="/videos">
-              <button className="border-1 mt-8 rounded-md border px-6 py-2 hover:bg-gray-700">
-                {translations.seeMore}
-              </button>
-            </Link> */}
           </div>
         </div>
       </main>
@@ -194,11 +188,6 @@ const Home = ({
                 </Link>
               ))}
             </div>
-            {/* <Link href="/videos">
-              <button className="border-1 mt-8 rounded-md border px-6 py-2 hover:bg-gray-700">
-                {translations.seeMore}
-              </button>
-            </Link> */}
           </div>
         </div>
       </main>
