@@ -13,6 +13,12 @@ import {
   MouseParallaxChild,
   MouseParallaxContainer,
 } from "react-parallax-mouse";
+import { api } from "~/api";
+import {
+  DiscographyEntryOrderByInput,
+  Language,
+  VideoOrderByInput,
+} from "~/gql";
 
 const movies = [
   { youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo" },
@@ -36,7 +42,15 @@ const news = [
   },
 ];
 
-const Home: NextPage = () => {
+const Home = ({
+  bio,
+  discography,
+  videos,
+}: {
+  bio: string;
+  discography: { title: string; releaseDate: string }[];
+  videos: { youtubeUrl: string }[];
+}) => {
   return (
     <div className="flex w-full flex-col">
       <MouseParallaxContainer className="flex min-h-[100vh] w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat">
@@ -55,13 +69,23 @@ const Home: NextPage = () => {
             backgroundPosition: "center",
           }}
         ></MouseParallaxChild>
-        <MouseParallaxChild factorX={0.07} factorY={0.07} className="font-thin absolute h-full grid grid-rows-5">
-          <span className="row-start-2 translate-x-[-25%] translate-y-[-25%] uppercase opacity-10 text-white text-6xl">electronic music producer</span>
+        <MouseParallaxChild
+          factorX={0.07}
+          factorY={0.07}
+          className="absolute grid h-full grid-rows-5 font-thin"
+        >
+          <span className="row-start-2 translate-x-[-25%] translate-y-[-25%] text-6xl uppercase text-white opacity-10">
+            electronic music producer
+          </span>
         </MouseParallaxChild>
-        <MouseParallaxChild factorX={0.1} factorY={0.1} className="flex h-full items-end">
+        <MouseParallaxChild
+          factorX={0.1}
+          factorY={0.1}
+          className="flex h-full items-end"
+        >
           <Image
             alt="logo"
-            className="scale-125 ml-48 max-h-[75vh] object-contain"
+            className="ml-48 max-h-[75vh] scale-125 object-contain"
             src={andrew}
           ></Image>
         </MouseParallaxChild>
@@ -75,73 +99,37 @@ const Home: NextPage = () => {
           </div>
         </MouseParallaxChild>
       </MouseParallaxContainer>
-      {/* <main
-        className="flex min-h-[100vh] w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat"
-        style={{ backgroundImage: "url(/main_background_photo.jpg)" }}
-      >
-        <div className="grid grid-cols-3">
-          <Image
-            alt="logo"
-            className="col-start-2 max-h-[30vh] object-contain object-center"
-            src={logoWhite}
-          ></Image>
-        </div>
-      </main> */}
       <main
         id="bio"
         className="my-24 flex min-h-[50vh] w-full flex-col items-center justify-center text-white"
       >
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-            BIO.
+            BIO.<div className="my-4"></div>
           </h1>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            <span>
-              Andrew Core-Tak naprawdę Andrzej Żebro. W 2007 roku zafascynowany
-              przygodami swojego starszego brata za konsolą postanowił postawić
-              na swoim. Od tego czasu zaczął stawiać pierwsze kroki zarówno w
-              mixowaniu jak i w produkcji muzyki. Początki były bardzo trudne,
-              ale z czasem Andrzej zaczął łatwo odnajdywać się w tym, co robił.
-              W latach 2008-2010 zrealizował kilka inspirujących produkcji,
-              które zainteresowały publiczność. Wraz z bratem ma na koncie kilka
-              albumów na „własnym” podwórku jak również za granicą w takich
-              wytwórniach jak Hamburg Aufmahen oraz „Feet Bass” u Torstena
-              Kanzlera wraz z Davidem Dee. Obie Epki zostały wydane pod
-              pseudonimem „Typical Twins” czyli Andrzej oraz jego starszy brat
-              Krzysztof (John Lecter) Od Roku 2010 do teraz (2022)Andrew Core
-              był „nieaktywny” lecz w 2023 postanowił wrócić do branży muzycznej
-              co na pewno przełoży się na wiele produkcji w klimatach
-              tech-house, house oraz techno.
-            </span>
+            <div dangerouslySetInnerHTML={{ __html: bio }}></div>
             <div className="grid grid-cols-2 grid-rows-2">
-              <div>
-                <Image
-                  className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
-                  src={img1}
-                  alt=""
-                ></Image>
-              </div>
-              <div>
-                <Image
-                  className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
-                  src={img2}
-                  alt=""
-                ></Image>
-              </div>
-              <div>
-                <Image
-                  className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
-                  src={img3}
-                  alt=""
-                ></Image>
-              </div>
-              <div>
-                <Image
-                  className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
-                  src={img4}
-                  alt=""
-                ></Image>
-              </div>
+              <Image
+                className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                src={img1}
+                alt=""
+              ></Image>
+              <Image
+                className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                src={img2}
+                alt=""
+              ></Image>
+              <Image
+                className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                src={img3}
+                alt=""
+              ></Image>
+              <Image
+                className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                src={img4}
+                alt=""
+              ></Image>
             </div>
           </div>
         </div>
@@ -287,5 +275,33 @@ const Home: NextPage = () => {
     </div>
   );
 };
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  const { discographyEntries } = await api.discographyEntries({
+    orderBy: DiscographyEntryOrderByInput.ReleaseDateDesc,
+  });
+
+  const { videos } = await api.videos({
+    orderBy: VideoOrderByInput.CreatedAtDesc,
+    first: 4,
+  });
+
+  const {
+    siteContents: [siteContent],
+  } = await api.about({ language: "en" as Language });
+
+  const {
+    content: { html: bio },
+  } = siteContent!;
+
+  return {
+    props: {
+      bio,
+      discography: discographyEntries,
+      videos,
+    },
+    revalidate: 10,
+  };
+}
 
 export default Home;
