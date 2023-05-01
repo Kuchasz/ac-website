@@ -1,0 +1,13 @@
+query newsEntries($orderBy: NewsEntryOrderByInput) {
+  newsEntries(orderBy: $orderBy, first: 1000) {
+    id
+    title
+    photo {
+      url
+    }
+    content {
+      html
+      text
+    }
+  }
+}

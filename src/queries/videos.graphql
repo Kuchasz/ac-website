@@ -1,9 +1,5 @@
 query videos($orderBy: VideoOrderByInput, $first: Int) {
   videos(orderBy: $orderBy, first: $first) {
-    ...ListVideo
+    youtubeUrl
   }
-}
-
-fragment ListVideo on Video {
-  youtubeUrl
 }
