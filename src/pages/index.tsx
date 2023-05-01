@@ -69,6 +69,7 @@ const Home = ({
           <Image
             alt="logo"
             className="ml-48 max-h-[75vh] scale-125 object-contain"
+            height={800}
             src={andrew}
           ></Image>
         </MouseParallaxChild>
@@ -77,6 +78,7 @@ const Home = ({
             <Image
               alt="logo"
               className="col-start-2 max-h-[30vh] object-contain object-center"
+              height={500}
               src={logoWhite}
             ></Image>
           </div>
@@ -94,22 +96,30 @@ const Home = ({
             <div dangerouslySetInnerHTML={{ __html: bio }}></div>
             <div className="grid grid-cols-2 grid-rows-2">
               <Image
-                className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                height={250}
+                width={250}
                 src={img1}
                 alt=""
               ></Image>
               <Image
-                className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                height={250}
+                width={250}
                 src={img2}
                 alt=""
               ></Image>
               <Image
-                className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                height={250}
+                width={250}
                 src={img3}
                 alt=""
               ></Image>
               <Image
-                className="max-w-56 h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                height={250}
+                width={250}
                 src={img4}
                 alt=""
               ></Image>
