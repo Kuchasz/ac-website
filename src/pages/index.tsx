@@ -23,21 +23,6 @@ import { NewsEntry } from "~/gql";
 import { Video } from "~/gql";
 import { DiscographyEntry } from "~/gql";
 
-const news = [
-  {
-    youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo",
-    title: "Lorem, ipsum dolor sit amet consectetur adipisicing elit",
-    content:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita quisquam aliquid deleniti id. Quos nam dolore qui similique non neque tempore, cum ipsum totam facere porro odio asperiores aspernatur officia.",
-  },
-  {
-    youtubeUrl: "https://www.youtube.com/embed/ljF337Y8544",
-    title: "Sequi ea veniam a ipsam, necessitatibus cum error",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam temporibus animi consequatur. Reprehenderit labore ad iste sed eveniet fuga porro totam, esse quis optio rem incidunt quasi quos facilis aliquam?",
-  },
-];
-
 const Home = ({
   bio,
   discography,
