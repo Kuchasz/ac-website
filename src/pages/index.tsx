@@ -20,13 +20,6 @@ import {
   VideoOrderByInput,
 } from "~/gql";
 
-const movies = [
-  { youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo" },
-  { youtubeUrl: "https://www.youtube.com/embed/ljF337Y8544" },
-  { youtubeUrl: "https://www.youtube.com/embed/0654SQ29CQA" },
-  { youtubeUrl: "https://www.youtube.com/embed/XpjMx2GDCIk" },
-];
-
 const news = [
   {
     youtubeUrl: "https://www.youtube.com/embed/o2yHZDO8vMo",
@@ -198,7 +191,7 @@ const Home = ({
           </h1>
           <div className="flex flex-col items-center">
             <div className="flex flex-wrap justify-center gap-x-4">
-              {movies.map((v) => (
+              {videos.map((v) => (
                 <Link
                   key={v.youtubeUrl}
                   href={`/video/${getYoutubeId(v.youtubeUrl)}`}
