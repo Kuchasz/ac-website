@@ -143,54 +143,13 @@ const Home = ({
             DISCOGRAPHY.
           </h1>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-            <DiscographyEntry
-              date="2023-05-01"
-              title="Andrew Core – Space Trumpet EP [Datatech]"
-            />
-            <DiscographyEntry
-              date="2023-03-31"
-              title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
-            />
-            <DiscographyEntry
-              date="2023-05-01"
-              title="Andrew Core – Space Trumpet EP [Datatech]"
-            />
-            <DiscographyEntry
-              date="2023-03-31"
-              title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
-            />
-            <DiscographyEntry
-              date="2023-05-01"
-              title="Andrew Core – Space Trumpet EP [Datatech]"
-            />
-            <DiscographyEntry
-              date="2023-03-31"
-              title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
-            />{" "}
-            <DiscographyEntry
-              date="2023-05-01"
-              title="Andrew Core – Space Trumpet EP [Datatech]"
-            />
-            <DiscographyEntry
-              date="2023-03-31"
-              title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
-            />
-            <DiscographyEntry
-              date="2023-05-01"
-              title="Andrew Core – Space Trumpet EP [Datatech]"
-            />
-            <DiscographyEntry
-              date="2023-03-31"
-              title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
-            />
-            <DiscographyEntry
-              date="2023-05-01"
-              title="Andrew Core – Space Trumpet EP [Datatech]"
-            />
-            <DiscographyEntry
-              date="2023-03-31"
-              title="Andrew Core – Deep Breath incl John Lecter Remix [Oxatech Records]"
-            />
+            {discography.map((d) => (
+              <DiscographyEntry
+                key={d.title}
+                date={d.releaseDate}
+                title={d.title}
+              />
+            ))}
           </div>
         </div>
       </main>
