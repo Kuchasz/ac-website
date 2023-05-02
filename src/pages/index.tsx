@@ -160,13 +160,14 @@ const Home = ({
                 <Link
                   key={v.title}
                   href={`/news/${v.id}`}
-                  className="flex"
+                  className="flex items-center flex-col md:flex-row my-4"
                 >
-                  <img
-                    className="max-w-[10rem] cursor-pointer object-cover brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0 md:max-w-[20rem]"
-                    src={v.photo.url}
-                  ></img>
-                  <div className="ml-4 flex flex-col justify-center">
+                  <Image
+                    className="w-[250px] h-[250px] mx-4 cursor-pointer object-cover brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0 md:max-w-[20rem]"
+                    width={300}
+                    height={300}
+                    src={v.photo.url} alt={""}></Image>
+                  <div className="my-4 flex flex-col justify-center">
                     <div className="text-lg">{v.title}</div>
                     <div className="text-xs">{v.content.text.slice(0, 150)}...</div>
                   </div>
