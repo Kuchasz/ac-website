@@ -32,7 +32,6 @@ export async function getServerSideProps({ params }: GetStaticPropsContext) {
     props: {
       news: news.newsEntry,
     },
-    // revalidate: 10,
   };
 }
 
