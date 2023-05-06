@@ -2,6 +2,10 @@ import type { GetStaticPropsContext } from "next";
 import { api } from "~/api";
 import type { NewsEntry } from "~/gql";
 
+export const config = {
+  runtime: "experimental-edge",
+};
+
 const News = ({ news }: { news: NewsEntry }) => {
   return (
     <main className="my-24 flex min-h-[50vh] w-full flex-col items-center justify-center text-white">
