@@ -1,6 +1,8 @@
-import Link, { LinkProps } from "next/link";
+import Link from "next/link";
+import type { LinkProps } from "next/link";
 import { useRouter } from "next/router";
-import React, { PropsWithChildren } from "react";
+import React from "react";
+import type { PropsWithChildren } from "react";
 
 type AnchorProps = Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,

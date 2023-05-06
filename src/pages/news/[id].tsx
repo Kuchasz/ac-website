@@ -1,6 +1,6 @@
-import { GetStaticPropsContext } from "next";
+import type { GetStaticPropsContext } from "next";
 import { api } from "~/api";
-import { NewsEntry, NewsEntryOrderByInput } from "~/gql";
+import type { NewsEntry } from "~/gql";
 
 const News = ({ news }: { news: NewsEntry }) => {
   return (
