@@ -11,7 +11,7 @@ const News = ({ news }: { news: NewsEntry }) => {
         </h1>
         <div className="flex flex-col items-center">
           <img
-            className="max-w-[10rem] cursor-pointer object-cover brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0 md:max-w-[40rem]"
+            className="max-w-[10rem] object-cover brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0 md:max-w-[40rem]"
             src={news?.photo?.url}
           ></img>
           <div className="mt-8 flex flex-col justify-center">
@@ -25,24 +25,24 @@ const News = ({ news }: { news: NewsEntry }) => {
 
 export default News;
 
-export async function getStaticProps({ params }: GetStaticPropsContext) {
+export async function getServerSideProps({ params }: GetStaticPropsContext) {
   const news = await api.newsEntry({ id: params!.id! as string });
 
   return {
     props: {
       news: news.newsEntry,
     },
-    revalidate: 10,
+    // revalidate: 10,
   };
 }
 
-export async function getStaticPaths() {
-  const { newsEntries } = await api.newsEntries({
-    orderBy: NewsEntryOrderByInput.CreatedAtDesc,
-  });
+// export async function getStaticPaths() {
+//   const { newsEntries } = await api.newsEntries({
+//     orderBy: NewsEntryOrderByInput.CreatedAtDesc,
+//   });
 
-  return {
-    paths: newsEntries.map((e) => ({ params: { id: e.id } })),
-    fallback: false, // can also be true or 'blocking'
-  };
-}
+//   return {
+//     paths: newsEntries.map((e) => ({ params: { id: e.id } })),
+//     fallback: false
+//   };
+// }
