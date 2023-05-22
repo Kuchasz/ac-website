@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 const YoutubeVideo = ({ url }: { url: string }) => (
   <iframe
-    className="my-4 w-full max-w-3xl bg-red-500"
+    className="my-4 w-full max-w-3xl bg-black"
     width="300px"
     height="400px"
     src={`https://www.youtube.com/embed/${url}`}
