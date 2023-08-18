@@ -27,7 +27,7 @@ const Home = ({
   bio,
   discography,
   videos,
-  news
+  news,
 }: {
   bio: string;
   discography: DiscographyEntry[];
@@ -160,16 +160,20 @@ const Home = ({
                 <Link
                   key={v.title}
                   href={`/news/${v.id}`}
-                  className="flex items-center flex-col md:flex-row my-4"
+                  className="my-4 flex flex-col items-center md:flex-row"
                 >
                   <Image
-                    className="w-[250px] h-[250px] mx-4 cursor-pointer object-cover brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0 md:max-w-[20rem]"
-                    width={300}
-                    height={300}
-                    src={v.photo.url} alt={""}></Image>
-                  <div className="my-4 flex flex-col justify-center">
+                    className="mx-4 h-[250px] w-[250px] cursor-pointer object-cover brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0 md:max-w-[20rem]"
+                    width={250}
+                    height={250}
+                    src={v.photo.url}
+                    alt={""}
+                  ></Image>
+                  <div className="my-4 flex h-full flex-col justify-center">
                     <div className="text-lg">{v.title}</div>
-                    <div className="text-xs">{v.content.text.slice(0, 150)}...</div>
+                    <div className="max-w-xl overflow-hidden text-ellipsis text-xs">
+                      {v.content.text.replaceAll("\\n", " ").slice(0, 250)}...
+                    </div>
                   </div>
                 </Link>
               ))}
@@ -211,7 +215,9 @@ const Home = ({
             CONTACT.
           </h1>
           <div className="">
-            <span>typicaltwins@gmail.com</span>
+            <Link href="mailto:typicaltwins@gmail.com">
+              typicaltwins@gmail.com
+            </Link>
           </div>
         </div>
       </main>
@@ -237,14 +243,16 @@ export async function getStaticProps() {
     content: { html: bio },
   } = siteContent!;
 
-  const { newsEntries } = await api.newsEntries({ orderBy: NewsEntryOrderByInput.CreatedAtDesc });
+  const { newsEntries } = await api.newsEntries({
+    orderBy: NewsEntryOrderByInput.CreatedAtDesc,
+  });
 
   return {
     props: {
       bio,
       discography: discographyEntries,
       videos,
-      news: newsEntries
+      news: newsEntries,
     },
     revalidate: 10,
   };
