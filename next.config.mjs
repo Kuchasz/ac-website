@@ -20,7 +20,13 @@ const config = {
   images: {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    domains: ['media.graphassets.com']
+    domains: ['media.graphassets.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.graphassets.com',
+      },
+    ],
   }
 };
 export default config;
