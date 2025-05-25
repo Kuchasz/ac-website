@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { StaticImageData } from "next/image";
+import { type StaticImageData } from "next/image";
 
 interface LightboxImageProps {
   src: string | StaticImageData;
