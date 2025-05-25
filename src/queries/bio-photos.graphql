@@ -1,0 +1,7 @@
+query bioPhotos($orderBy: BioPhotoOrderByInput, $first: Int) {
+  bioPhotos(orderBy: $orderBy, first: $first) {
+    photo {
+      url
+    }
+  }
+}

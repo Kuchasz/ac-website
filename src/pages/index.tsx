@@ -1,9 +1,5 @@
 import { DisplayDiscographyEntry } from "~/components/display-discography-entry";
 import { LightboxImage } from "~/components/lightbox-image";
-import img1 from "../../public/landing_page/Andrew Core.jpg";
-import img2 from "../../public/landing_page/IMG_3796.jpg";
-import img3 from "../../public/landing_page/andrewcore22.png";
-import img4 from "../../public/landing_page/DSC04780.jpg";
 import andrew from "../../public/landing_page/andrew.png";
 import Image from "next/image";
 import logoWhite from "../../public/logo_white.png";
@@ -15,6 +11,8 @@ import {
 } from "react-parallax-mouse";
 import { api } from "~/api";
 import {
+  BioPhoto,
+  BioPhotoOrderByInput,
   DiscographyEntryOrderByInput,
   Language,
   NewsEntryOrderByInput,
@@ -26,11 +24,13 @@ import { DiscographyEntry } from "~/gql";
 
 const Home = ({
   bio,
+  bioPhotos,
   discography,
   videos,
   news,
 }: {
   bio: string;
+  bioPhotos: BioPhoto[];
   discography: DiscographyEntry[];
   videos: Video[];
   news: NewsEntry[];
@@ -96,38 +96,23 @@ const Home = ({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             <div dangerouslySetInnerHTML={{ __html: bio }}></div>
             <div className="grid grid-cols-2 grid-rows-2">
-              <LightboxImage
-                className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
-                height={250}
-                width={250}
-                src={img1}
-                alt="Andrew Core - Bio Photo 1"
-              ></LightboxImage>
-              <LightboxImage
-                className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
-                height={250}
-                width={250}
-                src={img2}
-                alt="Andrew Core - Bio Photo 2"
-              ></LightboxImage>
-              <LightboxImage
-                className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
-                height={250}
-                width={250}
-                src={img3}
-                alt="Andrew Core - Bio Photo 3"
-              ></LightboxImage>
-              <LightboxImage
-                className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
-                height={250}
-                width={250}
-                src={img4}
-                alt="Andrew Core - Bio Photo 4"
-              ></LightboxImage>
+              {bioPhotos.map((p, index) => (
+                <LightboxImage
+                  key={p.photo!.url}
+                  className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
+                  height={250}
+                  width={250}
+                  src={p.photo!.url}
+                  alt={`Andrew Core - Bio Photo ${index + 1}`}
+                ></LightboxImage>
+              ))}
             </div>
           </div>
         </div>
-      </main>
+
+
+
+      </main >
       <main
         id="discography"
         className="my-24 flex min-h-[50vh] w-full flex-col items-center justify-center text-white"
@@ -225,7 +210,7 @@ const Home = ({
           </div>
         </div>
       </main>
-    </div>
+    </div >
   );
 };
 
@@ -237,6 +222,11 @@ export async function getStaticProps() {
   const { videos } = await api.videos({
     orderBy: VideoOrderByInput.CreatedAtDesc,
     first: 4,
+  });
+
+  const { bioPhotos } = await api.bioPhotos({
+    orderBy: BioPhotoOrderByInput.CreatedAtDesc,
+    first: 12,
   });
 
   const {
@@ -254,6 +244,7 @@ export async function getStaticProps() {
   return {
     props: {
       bio,
+      bioPhotos,
       discography: discographyEntries,
       videos,
       news: newsEntries,

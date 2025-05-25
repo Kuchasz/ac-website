@@ -29,7 +29,7 @@ export type Aggregate = {
 };
 
 /** Asset system model */
-export type Asset = Node & {
+export type Asset = Entity & Node & {
   __typename?: 'Asset';
   /** The time the document was created */
   createdAt: Scalars['DateTime'];
@@ -53,6 +53,7 @@ export type Asset = Node & {
   localizations: Array<Asset>;
   /** The mime type of the file */
   mimeType?: Maybe<Scalars['String']>;
+  photoBioPhoto: Array<BioPhoto>;
   photoNewsEntry: Array<NewsEntry>;
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']>;
@@ -67,6 +68,8 @@ export type Asset = Node & {
   updatedAt: Scalars['DateTime'];
   /** User that last updated this document */
   updatedBy?: Maybe<User>;
+  /** Returns information you need to upload the asset. The type of upload is dependant on what you pass into asset creations as upload type. */
+  upload?: Maybe<AssetUpload>;
   /** Get the url for the asset with provided transformations applied. */
   url: Scalars['String'];
   /** The file width */
@@ -107,6 +110,20 @@ export type AssetHistoryArgs = {
 export type AssetLocalizationsArgs = {
   includeCurrent?: Scalars['Boolean'];
   locales?: Array<Locale>;
+};
+
+
+/** Asset system model */
+export type AssetPhotoBioPhotoArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<BioPhotoOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<BioPhotoWhereInput>;
 };
 
 
@@ -187,27 +204,22 @@ export type AssetConnection = {
 
 export type AssetCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
-  fileName: Scalars['String'];
-  handle: Scalars['String'];
-  height?: InputMaybe<Scalars['Float']>;
+  fileName?: InputMaybe<Scalars['String']>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<AssetCreateLocalizationsInput>;
-  mimeType?: InputMaybe<Scalars['String']>;
+  photoBioPhoto?: InputMaybe<BioPhotoCreateManyInlineInput>;
   photoNewsEntry?: InputMaybe<NewsEntryCreateManyInlineInput>;
-  size?: InputMaybe<Scalars['Float']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
-  width?: InputMaybe<Scalars['Float']>;
+  /** Optionally the system can upload a file for you, for that you need to provide a publicly accessible url */
+  uploadUrl?: InputMaybe<Scalars['String']>;
 };
 
 export type AssetCreateLocalizationDataInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
-  fileName: Scalars['String'];
-  handle: Scalars['String'];
-  height?: InputMaybe<Scalars['Float']>;
-  mimeType?: InputMaybe<Scalars['String']>;
-  size?: InputMaybe<Scalars['Float']>;
+  fileName?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
-  width?: InputMaybe<Scalars['Float']>;
+  /** Optionally the system can upload a file for you, for that you need to provide a publicly accessible url */
+  uploadUrl?: InputMaybe<Scalars['String']>;
 };
 
 export type AssetCreateLocalizationInput = {
@@ -292,6 +304,9 @@ export type AssetManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']>;
+  photoBioPhoto_every?: InputMaybe<BioPhotoWhereInput>;
+  photoBioPhoto_none?: InputMaybe<BioPhotoWhereInput>;
+  photoBioPhoto_some?: InputMaybe<BioPhotoWhereInput>;
   photoNewsEntry_every?: InputMaybe<NewsEntryWhereInput>;
   photoNewsEntry_none?: InputMaybe<NewsEntryWhereInput>;
   photoNewsEntry_some?: InputMaybe<NewsEntryWhereInput>;
@@ -330,6 +345,7 @@ export type AssetManyWhereInput = {
   /** All values that are not contained in given list. */
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   updatedBy?: InputMaybe<UserWhereInput>;
+  upload?: InputMaybe<AssetUploadWhereInput>;
 };
 
 export enum AssetOrderByInput {
@@ -355,6 +371,17 @@ export enum AssetOrderByInput {
   WidthDesc = 'width_DESC'
 }
 
+/** Identifies documents */
+export type AssetSingleRelationWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<AssetSingleRelationWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<AssetSingleRelationWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<AssetSingleRelationWhereInput>>;
+  upload?: InputMaybe<AssetUploadWhereInput>;
+};
+
 /** Transformations for Assets */
 export type AssetTransformationInput = {
   document?: InputMaybe<DocumentTransformationInput>;
@@ -365,23 +392,22 @@ export type AssetTransformationInput = {
 
 export type AssetUpdateInput = {
   fileName?: InputMaybe<Scalars['String']>;
-  handle?: InputMaybe<Scalars['String']>;
-  height?: InputMaybe<Scalars['Float']>;
   /** Manage document localizations */
   localizations?: InputMaybe<AssetUpdateLocalizationsInput>;
-  mimeType?: InputMaybe<Scalars['String']>;
+  photoBioPhoto?: InputMaybe<BioPhotoUpdateManyInlineInput>;
   photoNewsEntry?: InputMaybe<NewsEntryUpdateManyInlineInput>;
-  size?: InputMaybe<Scalars['Float']>;
-  width?: InputMaybe<Scalars['Float']>;
+  /** Use this to define if its a reupload for the asset */
+  reUpload?: InputMaybe<Scalars['Boolean']>;
+  /** Optionally the system can upload a file for you, for that you need to provide a publicly accessible url */
+  uploadUrl?: InputMaybe<Scalars['String']>;
 };
 
 export type AssetUpdateLocalizationDataInput = {
   fileName?: InputMaybe<Scalars['String']>;
-  handle?: InputMaybe<Scalars['String']>;
-  height?: InputMaybe<Scalars['Float']>;
-  mimeType?: InputMaybe<Scalars['String']>;
-  size?: InputMaybe<Scalars['Float']>;
-  width?: InputMaybe<Scalars['Float']>;
+  /** Use this to define if its a reupload for the asset */
+  reUpload?: InputMaybe<Scalars['Boolean']>;
+  /** Optionally the system can upload a file for you, for that you need to provide a publicly accessible url */
+  uploadUrl?: InputMaybe<Scalars['String']>;
 };
 
 export type AssetUpdateLocalizationInput = {
@@ -417,31 +443,8 @@ export type AssetUpdateManyInlineInput = {
 };
 
 export type AssetUpdateManyInput = {
-  fileName?: InputMaybe<Scalars['String']>;
-  height?: InputMaybe<Scalars['Float']>;
-  /** Optional updates to localizations */
-  localizations?: InputMaybe<AssetUpdateManyLocalizationsInput>;
-  mimeType?: InputMaybe<Scalars['String']>;
-  size?: InputMaybe<Scalars['Float']>;
-  width?: InputMaybe<Scalars['Float']>;
-};
-
-export type AssetUpdateManyLocalizationDataInput = {
-  fileName?: InputMaybe<Scalars['String']>;
-  height?: InputMaybe<Scalars['Float']>;
-  mimeType?: InputMaybe<Scalars['String']>;
-  size?: InputMaybe<Scalars['Float']>;
-  width?: InputMaybe<Scalars['Float']>;
-};
-
-export type AssetUpdateManyLocalizationInput = {
-  data: AssetUpdateManyLocalizationDataInput;
-  locale: Locale;
-};
-
-export type AssetUpdateManyLocalizationsInput = {
-  /** Localizations to update */
-  update?: InputMaybe<Array<AssetUpdateManyLocalizationInput>>;
+  /** No fields in updateMany data input */
+  _?: InputMaybe<Scalars['String']>;
 };
 
 export type AssetUpdateManyWithNestedWhereInput = {
@@ -471,6 +474,119 @@ export type AssetUpdateWithNestedWhereUniqueInput = {
   data: AssetUpdateInput;
   /** Unique document search */
   where: AssetWhereUniqueInput;
+};
+
+/** Asset Upload */
+export type AssetUpload = {
+  __typename?: 'AssetUpload';
+  /** Asset Upload Error */
+  error?: Maybe<AssetUploadError>;
+  /** Expiry Timestamp */
+  expiresAt?: Maybe<Scalars['DateTime']>;
+  /** Asset Request Data for upload */
+  requestPostData?: Maybe<AssetUploadRequestPostData>;
+  /** Asset Request Data for upload */
+  status?: Maybe<AssetUploadStatus>;
+};
+
+/** Represents asset upload error */
+export type AssetUploadError = {
+  __typename?: 'AssetUploadError';
+  code: Scalars['String'];
+  message: Scalars['String'];
+};
+
+/** Asset Upload Request Post Data */
+export type AssetUploadRequestPostData = {
+  __typename?: 'AssetUploadRequestPostData';
+  /** The algorithm to use in the form field. This value should be passed in the `X-Amz-Algorithm` form field. */
+  algorithm: Scalars['String'];
+  /** The credential to use in the form field. This value should be passed in the `X-Amz-Credential` form field. */
+  credential: Scalars['String'];
+  /** The date the request was signed, formatted as YYYYMMDDTHHMMSSZ. This value should be passed in the `X-Amz-Date` header. */
+  date: Scalars['String'];
+  /** The key to use in the form field. This value should be passed in the `Key` form field. */
+  key: Scalars['String'];
+  /** The policy to use in the form field. This value should be passed in the `Policy` form field. */
+  policy: Scalars['String'];
+  /** The security token to use in the form field. This field is optional only pass it if its not null. This value should be passed in the `X-Amz-Security-Token` form field if not null. */
+  securityToken?: Maybe<Scalars['String']>;
+  /** The signature to use in the form field. This value should be passed in the `X-Amz-Signature` form field. */
+  signature: Scalars['String'];
+  /** The URL to which the file should be uploaded with a POST request. */
+  url: Scalars['String'];
+};
+
+/** System Asset Upload Status */
+export enum AssetUploadStatus {
+  AssetCreatePending = 'ASSET_CREATE_PENDING',
+  AssetErrorUpload = 'ASSET_ERROR_UPLOAD',
+  AssetUpdatePending = 'ASSET_UPDATE_PENDING',
+  AssetUploadComplete = 'ASSET_UPLOAD_COMPLETE'
+}
+
+/** Identifies documents */
+export type AssetUploadWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<AssetUploadWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<AssetUploadWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<AssetUploadWhereInput>>;
+  expiresAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  expiresAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  expiresAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  expiresAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  expiresAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  expiresAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** Any other value that exists and is not equal to the given value. */
+  expiresAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  expiresAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  status?: InputMaybe<AssetUploadStatus>;
+  /** All values that are contained in given list. */
+  status_in?: InputMaybe<Array<InputMaybe<AssetUploadStatus>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  status_not?: InputMaybe<AssetUploadStatus>;
+  /** All values that are not contained in given list. */
+  status_not_in?: InputMaybe<Array<InputMaybe<AssetUploadStatus>>>;
+};
+
+/** Identifies documents */
+export type AssetUploadWhereStageInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<AssetUploadWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<AssetUploadWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<AssetUploadWhereInput>>;
+  expiresAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  expiresAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  expiresAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  expiresAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  expiresAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  expiresAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** Any other value that exists and is not equal to the given value. */
+  expiresAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  expiresAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  status?: InputMaybe<AssetUploadStatus>;
+  /** All values that are contained in given list. */
+  status_in?: InputMaybe<Array<InputMaybe<AssetUploadStatus>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  status_not?: InputMaybe<AssetUploadStatus>;
+  /** All values that are not contained in given list. */
+  status_not_in?: InputMaybe<Array<InputMaybe<AssetUploadStatus>>>;
 };
 
 export type AssetUpsertInput = {
@@ -619,6 +735,9 @@ export type AssetWhereInput = {
   mimeType_not_starts_with?: InputMaybe<Scalars['String']>;
   /** All values starting with the given string. */
   mimeType_starts_with?: InputMaybe<Scalars['String']>;
+  photoBioPhoto_every?: InputMaybe<BioPhotoWhereInput>;
+  photoBioPhoto_none?: InputMaybe<BioPhotoWhereInput>;
+  photoBioPhoto_some?: InputMaybe<BioPhotoWhereInput>;
   photoNewsEntry_every?: InputMaybe<NewsEntryWhereInput>;
   photoNewsEntry_none?: InputMaybe<NewsEntryWhereInput>;
   photoNewsEntry_some?: InputMaybe<NewsEntryWhereInput>;
@@ -672,6 +791,7 @@ export type AssetWhereInput = {
   /** All values that are not contained in given list. */
   updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   updatedBy?: InputMaybe<UserWhereInput>;
+  upload?: InputMaybe<AssetUploadWhereInput>;
   width?: InputMaybe<Scalars['Float']>;
   /** All values greater than the given value. */
   width_gt?: InputMaybe<Scalars['Float']>;
@@ -714,6 +834,406 @@ export type BatchPayload = {
   count: Scalars['Long'];
 };
 
+export type BioPhoto = Entity & Node & {
+  __typename?: 'BioPhoto';
+  /** The time the document was created */
+  createdAt: Scalars['DateTime'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** Get the document in other stages */
+  documentInStages: Array<BioPhoto>;
+  /** List of BioPhoto versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars['ID'];
+  photo?: Maybe<Asset>;
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  scheduledIn: Array<ScheduledOperation>;
+  /** System stage field */
+  stage: Stage;
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime'];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+};
+
+
+export type BioPhotoCreatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type BioPhotoDocumentInStagesArgs = {
+  includeCurrent?: Scalars['Boolean'];
+  inheritLocale?: Scalars['Boolean'];
+  stages?: Array<Stage>;
+};
+
+
+export type BioPhotoHistoryArgs = {
+  limit?: Scalars['Int'];
+  skip?: Scalars['Int'];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type BioPhotoPhotoArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  locales?: InputMaybe<Array<Locale>>;
+  where?: InputMaybe<AssetSingleRelationWhereInput>;
+};
+
+
+export type BioPhotoPublishedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type BioPhotoScheduledInArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+
+export type BioPhotoUpdatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type BioPhotoConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: BioPhotoWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type BioPhotoConnection = {
+  __typename?: 'BioPhotoConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<BioPhotoEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type BioPhotoCreateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  photo?: InputMaybe<AssetCreateOneInlineInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type BioPhotoCreateManyInlineInput = {
+  /** Connect multiple existing BioPhoto documents */
+  connect?: InputMaybe<Array<BioPhotoWhereUniqueInput>>;
+  /** Create and connect multiple existing BioPhoto documents */
+  create?: InputMaybe<Array<BioPhotoCreateInput>>;
+};
+
+export type BioPhotoCreateOneInlineInput = {
+  /** Connect one existing BioPhoto document */
+  connect?: InputMaybe<BioPhotoWhereUniqueInput>;
+  /** Create and connect one BioPhoto document */
+  create?: InputMaybe<BioPhotoCreateInput>;
+};
+
+/** An edge in a connection. */
+export type BioPhotoEdge = {
+  __typename?: 'BioPhotoEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: BioPhoto;
+};
+
+/** Identifies documents */
+export type BioPhotoManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<BioPhotoWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<BioPhotoWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<BioPhotoWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** Any other value that exists and is not equal to the given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  documentInStages_every?: InputMaybe<BioPhotoWhereStageInput>;
+  documentInStages_none?: InputMaybe<BioPhotoWhereStageInput>;
+  documentInStages_some?: InputMaybe<BioPhotoWhereStageInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  photo?: InputMaybe<AssetWhereInput>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** Any other value that exists and is not equal to the given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+export enum BioPhotoOrderByInput {
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  PublishedAtAsc = 'publishedAt_ASC',
+  PublishedAtDesc = 'publishedAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC'
+}
+
+export type BioPhotoUpdateInput = {
+  photo?: InputMaybe<AssetUpdateOneInlineInput>;
+};
+
+export type BioPhotoUpdateManyInlineInput = {
+  /** Connect multiple existing BioPhoto documents */
+  connect?: InputMaybe<Array<BioPhotoConnectInput>>;
+  /** Create and connect multiple BioPhoto documents */
+  create?: InputMaybe<Array<BioPhotoCreateInput>>;
+  /** Delete multiple BioPhoto documents */
+  delete?: InputMaybe<Array<BioPhotoWhereUniqueInput>>;
+  /** Disconnect multiple BioPhoto documents */
+  disconnect?: InputMaybe<Array<BioPhotoWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing BioPhoto documents */
+  set?: InputMaybe<Array<BioPhotoWhereUniqueInput>>;
+  /** Update multiple BioPhoto documents */
+  update?: InputMaybe<Array<BioPhotoUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple BioPhoto documents */
+  upsert?: InputMaybe<Array<BioPhotoUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type BioPhotoUpdateManyInput = {
+  /** No fields in updateMany data input */
+  _?: InputMaybe<Scalars['String']>;
+};
+
+export type BioPhotoUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: BioPhotoUpdateManyInput;
+  /** Document search */
+  where: BioPhotoWhereInput;
+};
+
+export type BioPhotoUpdateOneInlineInput = {
+  /** Connect existing BioPhoto document */
+  connect?: InputMaybe<BioPhotoWhereUniqueInput>;
+  /** Create and connect one BioPhoto document */
+  create?: InputMaybe<BioPhotoCreateInput>;
+  /** Delete currently connected BioPhoto document */
+  delete?: InputMaybe<Scalars['Boolean']>;
+  /** Disconnect currently connected BioPhoto document */
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  /** Update single BioPhoto document */
+  update?: InputMaybe<BioPhotoUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single BioPhoto document */
+  upsert?: InputMaybe<BioPhotoUpsertWithNestedWhereUniqueInput>;
+};
+
+export type BioPhotoUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: BioPhotoUpdateInput;
+  /** Unique document search */
+  where: BioPhotoWhereUniqueInput;
+};
+
+export type BioPhotoUpsertInput = {
+  /** Create document if it didn't exist */
+  create: BioPhotoCreateInput;
+  /** Update document if it exists */
+  update: BioPhotoUpdateInput;
+};
+
+export type BioPhotoUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: BioPhotoUpsertInput;
+  /** Unique document search */
+  where: BioPhotoWhereUniqueInput;
+};
+
+/** This contains a set of filters that can be used to compare values internally */
+export type BioPhotoWhereComparatorInput = {
+  /** This field can be used to request to check if the entry is outdated by internal comparison */
+  outdated_to?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Identifies documents */
+export type BioPhotoWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<BioPhotoWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<BioPhotoWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<BioPhotoWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** Any other value that exists and is not equal to the given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  documentInStages_every?: InputMaybe<BioPhotoWhereStageInput>;
+  documentInStages_none?: InputMaybe<BioPhotoWhereStageInput>;
+  documentInStages_some?: InputMaybe<BioPhotoWhereStageInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  photo?: InputMaybe<AssetWhereInput>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** Any other value that exists and is not equal to the given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+/** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
+export type BioPhotoWhereStageInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<BioPhotoWhereStageInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<BioPhotoWhereStageInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<BioPhotoWhereStageInput>>;
+  /** This field contains fields which can be set as true or false to specify an internal comparison */
+  compareWithParent?: InputMaybe<BioPhotoWhereComparatorInput>;
+  /** Specify the stage to compare with */
+  stage?: InputMaybe<Stage>;
+};
+
+/** References BioPhoto record uniquely */
+export type BioPhotoWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 /** Representing a color value comprising of HEX, RGBA and css color values */
 export type Color = {
   __typename?: 'Color';
@@ -740,7 +1260,7 @@ export type ConnectPositionInput = {
 };
 
 /** Single entry in discography */
-export type DiscographyEntry = Node & {
+export type DiscographyEntry = Entity & Node & {
   __typename?: 'DiscographyEntry';
   /** The time the document was created */
   createdAt: Scalars['DateTime'];
@@ -1213,22 +1733,17 @@ export type DiscographyEntryWhereUniqueInput = {
 };
 
 export enum DocumentFileTypes {
-  Doc = 'doc',
-  Docx = 'docx',
-  Html = 'html',
+  /** Automatically selects the best format for the image based on the browser's capabilities. */
+  AutoImage = 'autoImage',
+  Avif = 'avif',
+  Bmp = 'bmp',
+  Gif = 'gif',
+  Heic = 'heic',
   Jpg = 'jpg',
-  Odp = 'odp',
-  Ods = 'ods',
-  Odt = 'odt',
-  Pdf = 'pdf',
   Png = 'png',
-  Ppt = 'ppt',
-  Pptx = 'pptx',
   Svg = 'svg',
-  Txt = 'txt',
-  Webp = 'webp',
-  Xls = 'xls',
-  Xlsx = 'xlsx'
+  Tiff = 'tiff',
+  Webp = 'webp'
 }
 
 export type DocumentOutputInput = {
@@ -1236,27 +1751,15 @@ export type DocumentOutputInput = {
    * Transforms a document into a desired file type.
    * See this matrix for format support:
    *
-   * PDF:	jpg, odp, ods, odt, png, svg, txt, and webp
-   * DOC:	docx, html, jpg, odt, pdf, png, svg, txt, and webp
-   * DOCX:	doc, html, jpg, odt, pdf, png, svg, txt, and webp
-   * ODT:	doc, docx, html, jpg, pdf, png, svg, txt, and webp
-   * XLS:	jpg, pdf, ods, png, svg, xlsx, and webp
-   * XLSX:	jpg, pdf, ods, png, svg, xls, and webp
-   * ODS:	jpg, pdf, png, xls, svg, xlsx, and webp
-   * PPT:	jpg, odp, pdf, png, svg, pptx, and webp
-   * PPTX:	jpg, odp, pdf, png, svg, ppt, and webp
-   * ODP:	jpg, pdf, png, ppt, svg, pptx, and webp
-   * BMP:	jpg, odp, ods, odt, pdf, png, svg, and webp
-   * GIF:	jpg, odp, ods, odt, pdf, png, svg, and webp
-   * JPG:	jpg, odp, ods, odt, pdf, png, svg, and webp
-   * PNG:	jpg, odp, ods, odt, pdf, png, svg, and webp
-   * WEBP:	jpg, odp, ods, odt, pdf, png, svg, and webp
-   * TIFF:	jpg, odp, ods, odt, pdf, png, svg, and webp
-   * AI:	    jpg, odp, ods, odt, pdf, png, svg, and webp
-   * PSD:	jpg, odp, ods, odt, pdf, png, svg, and webp
-   * SVG:	jpg, odp, ods, odt, pdf, png, and webp
-   * HTML:	jpg, odt, pdf, svg, txt, and webp
-   * TXT:	jpg, html, odt, pdf, svg, and webp
+   * JPG:	autoImage, bmp, gif, jpg, png, webp, tiff
+   * PNG:	autoImage, bmp, gif, jpg, png, webp, tiff, svg
+   * SVG:	autoImage, bmp, gif, jpg, png, webp, tiff
+   * WEBP:	autoImage, bmp, gif, jpg, png, webp, tiff, svg
+   * GIF:	autoImage, bmp, gif, jpg, png, webp, tiff, svg
+   * TIFF:	autoImage, bmp, gif, jpg, png, webp, tiff, svg
+   * AVIF:	autoImage, bmp, gif, jpg, png, webp, tiff, svg
+   * PDF: 	autoImage, gif, jpg, png, webp, tiff
+   *
    */
   format?: InputMaybe<DocumentFileTypes>;
 };
@@ -1276,6 +1779,80 @@ export type DocumentVersion = {
   stage: Stage;
 };
 
+/** An object with an ID */
+export type Entity = {
+  /** The id of the object. */
+  id: Scalars['ID'];
+  /** The Stage of an object */
+  stage: Stage;
+};
+
+/** This enumeration holds all typenames that implement the Entity interface. Components and models implement the Entity interface. */
+export enum EntityTypeName {
+  /** Asset system model */
+  Asset = 'Asset',
+  BioPhoto = 'BioPhoto',
+  /** Single entry in discography */
+  DiscographyEntry = 'DiscographyEntry',
+  /** Entries of news */
+  NewsEntry = 'NewsEntry',
+  /** Scheduled Operation system model */
+  ScheduledOperation = 'ScheduledOperation',
+  /** Scheduled Release system model */
+  ScheduledRelease = 'ScheduledRelease',
+  SiteContent = 'SiteContent',
+  /** User system model */
+  User = 'User',
+  Video = 'Video'
+}
+
+/** Allows to specify input to query models and components directly */
+export type EntityWhereInput = {
+  /** The ID of an object */
+  id: Scalars['ID'];
+  locale?: InputMaybe<Locale>;
+  stage: Stage;
+  /** The Type name of an object */
+  typename: EntityTypeName;
+};
+
+export type ImageBlurInput = {
+  /** The amount of blurring to apply to the image. The value must be an integer from 1 to 20. */
+  amount: Scalars['Int'];
+};
+
+/** Adds a border to the image. */
+export type ImageBorderInput = {
+  /** The background color of the border. The value must be a valid hex color code. Or one of the supported color names. */
+  background: Scalars['String'];
+  /** The color of the border. The value must be a valid hex color code. Or one of the supported color names. */
+  color: Scalars['String'];
+  /** The width of the border in pixels. The value must be an integer from 1 to 1000. */
+  width: Scalars['Int'];
+};
+
+export type ImageCompressInput = {
+  /** Preserves the metadata of the image. */
+  metadata: Scalars['Boolean'];
+};
+
+/**
+ * Crops the image to the specified dimensions.
+ * The starting points for X and Y coordinates are [0,0], aligning with the top-left corner of the image.
+ * The width and height parameters determine the size in pixels of the cropping rectangle.
+ * The output will include only the portion of the image within the designated crop area.
+ */
+export type ImageCropInput = {
+  /** The height in pixels to resize the image to. The value must be an integer from 1 to 10000. */
+  height: Scalars['Int'];
+  /** The width in pixels to resize the image to. The value must be an integer from 1 to 10000. */
+  width: Scalars['Int'];
+  /** The x coordinate of the image. The value must be an integer from 0 to 10000. */
+  x: Scalars['Int'];
+  /** The y coordinate of the image. The value must be an integer from 0 to 10000. */
+  y: Scalars['Int'];
+};
+
 export enum ImageFit {
   /** Resizes the image to fit within the specified parameters without distorting, cropping, or changing the aspect ratio. */
   Clip = 'clip',
@@ -1287,6 +1864,11 @@ export enum ImageFit {
   Scale = 'scale'
 }
 
+export type ImageQualityInput = {
+  /** The quality of the image. The value must be an integer from 1 to 100. */
+  value: Scalars['Int'];
+};
+
 export type ImageResizeInput = {
   /** The default value for the fit parameter is fit:clip. */
   fit?: InputMaybe<ImageFit>;
@@ -1296,10 +1878,30 @@ export type ImageResizeInput = {
   width?: InputMaybe<Scalars['Int']>;
 };
 
+export type ImageSharpenInput = {
+  /** The amount of sharpening to apply to the image. The value must be an integer from 1 to 20. */
+  amount: Scalars['Int'];
+};
+
 /** Transformations for Images */
 export type ImageTransformationInput = {
+  /** Blurs the image. */
+  blur?: InputMaybe<ImageBlurInput>;
+  /** Adds a border to the image. */
+  border?: InputMaybe<ImageBorderInput>;
+  /** Compresses the image. */
+  compress?: InputMaybe<ImageCompressInput>;
+  /** Crops the image to the specified dimensions. */
+  crop?: InputMaybe<ImageCropInput>;
+  /**
+   * Changes the quality of the image. The value must be an integer from 1 to 100.
+   * Only supported for the following formats jpeg, jpg, webp, gif, heif, tiff, avif.
+   */
+  quality?: InputMaybe<ImageQualityInput>;
   /** Resizes the image */
   resize?: InputMaybe<ImageResizeInput>;
+  /** Sharpens the image. */
+  sharpen?: InputMaybe<ImageSharpenInput>;
 };
 
 export enum Language {
@@ -1336,11 +1938,10 @@ export type LocationInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  /**
-   * Create one asset
-   * @deprecated Asset mutations will be overhauled soon
-   */
+  /** Create an asset. Use the returned info to finish the creation process by uploading the asset. */
   createAsset?: Maybe<Asset>;
+  /** Create one bioPhoto */
+  createBioPhoto?: Maybe<BioPhoto>;
   /** Create one discographyEntry */
   createDiscographyEntry?: Maybe<DiscographyEntry>;
   /** Create one newsEntry */
@@ -1353,6 +1954,8 @@ export type Mutation = {
   createVideo?: Maybe<Video>;
   /** Delete one asset from _all_ existing stages. Returns deleted document. */
   deleteAsset?: Maybe<Asset>;
+  /** Delete one bioPhoto from _all_ existing stages. Returns deleted document. */
+  deleteBioPhoto?: Maybe<BioPhoto>;
   /** Delete one discographyEntry from _all_ existing stages. Returns deleted document. */
   deleteDiscographyEntry?: Maybe<DiscographyEntry>;
   /**
@@ -1362,6 +1965,13 @@ export type Mutation = {
   deleteManyAssets: BatchPayload;
   /** Delete many Asset documents, return deleted documents */
   deleteManyAssetsConnection: AssetConnection;
+  /**
+   * Delete many BioPhoto documents
+   * @deprecated Please use the new paginated many mutation (deleteManyBioPhotosConnection)
+   */
+  deleteManyBioPhotos: BatchPayload;
+  /** Delete many BioPhoto documents, return deleted documents */
+  deleteManyBioPhotosConnection: BioPhotoConnection;
   /**
    * Delete many DiscographyEntry documents
    * @deprecated Please use the new paginated many mutation (deleteManyDiscographyEntriesConnection)
@@ -1402,6 +2012,8 @@ export type Mutation = {
   deleteVideo?: Maybe<Video>;
   /** Publish one asset */
   publishAsset?: Maybe<Asset>;
+  /** Publish one bioPhoto */
+  publishBioPhoto?: Maybe<BioPhoto>;
   /** Publish one discographyEntry */
   publishDiscographyEntry?: Maybe<DiscographyEntry>;
   /**
@@ -1411,6 +2023,13 @@ export type Mutation = {
   publishManyAssets: BatchPayload;
   /** Publish many Asset documents */
   publishManyAssetsConnection: AssetConnection;
+  /**
+   * Publish many BioPhoto documents
+   * @deprecated Please use the new paginated many mutation (publishManyBioPhotosConnection)
+   */
+  publishManyBioPhotos: BatchPayload;
+  /** Publish many BioPhoto documents */
+  publishManyBioPhotosConnection: BioPhotoConnection;
   /**
    * Publish many DiscographyEntry documents
    * @deprecated Please use the new paginated many mutation (publishManyDiscographyEntriesConnection)
@@ -1447,6 +2066,8 @@ export type Mutation = {
   publishVideo?: Maybe<Video>;
   /** Schedule to publish one asset */
   schedulePublishAsset?: Maybe<Asset>;
+  /** Schedule to publish one bioPhoto */
+  schedulePublishBioPhoto?: Maybe<BioPhoto>;
   /** Schedule to publish one discographyEntry */
   schedulePublishDiscographyEntry?: Maybe<DiscographyEntry>;
   /** Schedule to publish one newsEntry */
@@ -1457,6 +2078,8 @@ export type Mutation = {
   schedulePublishVideo?: Maybe<Video>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishAsset?: Maybe<Asset>;
+  /** Unpublish one bioPhoto from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishBioPhoto?: Maybe<BioPhoto>;
   /** Unpublish one discographyEntry from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishDiscographyEntry?: Maybe<DiscographyEntry>;
   /** Unpublish one newsEntry from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -1467,6 +2090,8 @@ export type Mutation = {
   scheduleUnpublishVideo?: Maybe<Video>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishAsset?: Maybe<Asset>;
+  /** Unpublish one bioPhoto from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishBioPhoto?: Maybe<BioPhoto>;
   /** Unpublish one discographyEntry from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishDiscographyEntry?: Maybe<DiscographyEntry>;
   /**
@@ -1476,6 +2101,13 @@ export type Mutation = {
   unpublishManyAssets: BatchPayload;
   /** Find many Asset documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyAssetsConnection: AssetConnection;
+  /**
+   * Unpublish many BioPhoto documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyBioPhotosConnection)
+   */
+  unpublishManyBioPhotos: BatchPayload;
+  /** Find many BioPhoto documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyBioPhotosConnection: BioPhotoConnection;
   /**
    * Unpublish many DiscographyEntry documents
    * @deprecated Please use the new paginated many mutation (unpublishManyDiscographyEntriesConnection)
@@ -1512,6 +2144,8 @@ export type Mutation = {
   unpublishVideo?: Maybe<Video>;
   /** Update one asset */
   updateAsset?: Maybe<Asset>;
+  /** Update one bioPhoto */
+  updateBioPhoto?: Maybe<BioPhoto>;
   /** Update one discographyEntry */
   updateDiscographyEntry?: Maybe<DiscographyEntry>;
   /**
@@ -1521,6 +2155,13 @@ export type Mutation = {
   updateManyAssets: BatchPayload;
   /** Update many Asset documents */
   updateManyAssetsConnection: AssetConnection;
+  /**
+   * Update many bioPhotos
+   * @deprecated Please use the new paginated many mutation (updateManyBioPhotosConnection)
+   */
+  updateManyBioPhotos: BatchPayload;
+  /** Update many BioPhoto documents */
+  updateManyBioPhotosConnection: BioPhotoConnection;
   /**
    * Update many discographyEntries
    * @deprecated Please use the new paginated many mutation (updateManyDiscographyEntriesConnection)
@@ -1559,6 +2200,8 @@ export type Mutation = {
   updateVideo?: Maybe<Video>;
   /** Upsert one asset */
   upsertAsset?: Maybe<Asset>;
+  /** Upsert one bioPhoto */
+  upsertBioPhoto?: Maybe<BioPhoto>;
   /** Upsert one discographyEntry */
   upsertDiscographyEntry?: Maybe<DiscographyEntry>;
   /** Upsert one newsEntry */
@@ -1572,6 +2215,11 @@ export type Mutation = {
 
 export type MutationCreateAssetArgs = {
   data: AssetCreateInput;
+};
+
+
+export type MutationCreateBioPhotoArgs = {
+  data: BioPhotoCreateInput;
 };
 
 
@@ -1605,6 +2253,11 @@ export type MutationDeleteAssetArgs = {
 };
 
 
+export type MutationDeleteBioPhotoArgs = {
+  where: BioPhotoWhereUniqueInput;
+};
+
+
 export type MutationDeleteDiscographyEntryArgs = {
   where: DiscographyEntryWhereUniqueInput;
 };
@@ -1622,6 +2275,21 @@ export type MutationDeleteManyAssetsConnectionArgs = {
   last?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<AssetManyWhereInput>;
+};
+
+
+export type MutationDeleteManyBioPhotosArgs = {
+  where?: InputMaybe<BioPhotoManyWhereInput>;
+};
+
+
+export type MutationDeleteManyBioPhotosConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<BioPhotoManyWhereInput>;
 };
 
 
@@ -1719,6 +2387,12 @@ export type MutationPublishAssetArgs = {
 };
 
 
+export type MutationPublishBioPhotoArgs = {
+  to?: Array<Stage>;
+  where: BioPhotoWhereUniqueInput;
+};
+
+
 export type MutationPublishDiscographyEntryArgs = {
   to?: Array<Stage>;
   where: DiscographyEntryWhereUniqueInput;
@@ -1746,6 +2420,24 @@ export type MutationPublishManyAssetsConnectionArgs = {
   to?: Array<Stage>;
   where?: InputMaybe<AssetManyWhereInput>;
   withDefaultLocale?: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationPublishManyBioPhotosArgs = {
+  to?: Array<Stage>;
+  where?: InputMaybe<BioPhotoManyWhereInput>;
+};
+
+
+export type MutationPublishManyBioPhotosConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: InputMaybe<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  to?: Array<Stage>;
+  where?: InputMaybe<BioPhotoManyWhereInput>;
 };
 
 
@@ -1850,6 +2542,14 @@ export type MutationSchedulePublishAssetArgs = {
 };
 
 
+export type MutationSchedulePublishBioPhotoArgs = {
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  to?: Array<Stage>;
+  where: BioPhotoWhereUniqueInput;
+};
+
+
 export type MutationSchedulePublishDiscographyEntryArgs = {
   releaseAt?: InputMaybe<Scalars['DateTime']>;
   releaseId?: InputMaybe<Scalars['String']>;
@@ -1889,6 +2589,14 @@ export type MutationScheduleUnpublishAssetArgs = {
   releaseId?: InputMaybe<Scalars['String']>;
   unpublishBase?: InputMaybe<Scalars['Boolean']>;
   where: AssetWhereUniqueInput;
+};
+
+
+export type MutationScheduleUnpublishBioPhotoArgs = {
+  from?: Array<Stage>;
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  where: BioPhotoWhereUniqueInput;
 };
 
 
@@ -1932,6 +2640,12 @@ export type MutationUnpublishAssetArgs = {
 };
 
 
+export type MutationUnpublishBioPhotoArgs = {
+  from?: Array<Stage>;
+  where: BioPhotoWhereUniqueInput;
+};
+
+
 export type MutationUnpublishDiscographyEntryArgs = {
   from?: Array<Stage>;
   where: DiscographyEntryWhereUniqueInput;
@@ -1957,6 +2671,24 @@ export type MutationUnpublishManyAssetsConnectionArgs = {
   stage?: InputMaybe<Stage>;
   unpublishBase?: InputMaybe<Scalars['Boolean']>;
   where?: InputMaybe<AssetManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyBioPhotosArgs = {
+  from?: Array<Stage>;
+  where?: InputMaybe<BioPhotoManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyBioPhotosConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: Array<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: InputMaybe<Stage>;
+  where?: InputMaybe<BioPhotoManyWhereInput>;
 };
 
 
@@ -2056,6 +2788,12 @@ export type MutationUpdateAssetArgs = {
 };
 
 
+export type MutationUpdateBioPhotoArgs = {
+  data: BioPhotoUpdateInput;
+  where: BioPhotoWhereUniqueInput;
+};
+
+
 export type MutationUpdateDiscographyEntryArgs = {
   data: DiscographyEntryUpdateInput;
   where: DiscographyEntryWhereUniqueInput;
@@ -2076,6 +2814,23 @@ export type MutationUpdateManyAssetsConnectionArgs = {
   last?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<AssetManyWhereInput>;
+};
+
+
+export type MutationUpdateManyBioPhotosArgs = {
+  data: BioPhotoUpdateManyInput;
+  where?: InputMaybe<BioPhotoManyWhereInput>;
+};
+
+
+export type MutationUpdateManyBioPhotosConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  data: BioPhotoUpdateManyInput;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<BioPhotoManyWhereInput>;
 };
 
 
@@ -2177,6 +2932,12 @@ export type MutationUpsertAssetArgs = {
 };
 
 
+export type MutationUpsertBioPhotoArgs = {
+  upsert: BioPhotoUpsertInput;
+  where: BioPhotoWhereUniqueInput;
+};
+
+
 export type MutationUpsertDiscographyEntryArgs = {
   upsert: DiscographyEntryUpsertInput;
   where: DiscographyEntryWhereUniqueInput;
@@ -2201,7 +2962,7 @@ export type MutationUpsertVideoArgs = {
 };
 
 /** Entries of news */
-export type NewsEntry = Node & {
+export type NewsEntry = Entity & Node & {
   __typename?: 'NewsEntry';
   content: RichText;
   /** The time the document was created */
@@ -2257,6 +3018,7 @@ export type NewsEntryHistoryArgs = {
 export type NewsEntryPhotoArgs = {
   forceParentLocale?: InputMaybe<Scalars['Boolean']>;
   locales?: InputMaybe<Array<Locale>>;
+  where?: InputMaybe<AssetSingleRelationWhereInput>;
 };
 
 
@@ -2693,6 +3455,14 @@ export type Query = {
   assets: Array<Asset>;
   /** Retrieve multiple assets using the Relay connection interface */
   assetsConnection: AssetConnection;
+  /** Retrieve a single bioPhoto */
+  bioPhoto?: Maybe<BioPhoto>;
+  /** Retrieve document version */
+  bioPhotoVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple bioPhotos */
+  bioPhotos: Array<BioPhoto>;
+  /** Retrieve multiple bioPhotos using the Relay connection interface */
+  bioPhotosConnection: BioPhotoConnection;
   /** Retrieve multiple discographyEntries */
   discographyEntries: Array<DiscographyEntry>;
   /** Retrieve multiple discographyEntries using the Relay connection interface */
@@ -2701,6 +3471,8 @@ export type Query = {
   discographyEntry?: Maybe<DiscographyEntry>;
   /** Retrieve document version */
   discographyEntryVersion?: Maybe<DocumentVersion>;
+  /** Fetches an object given its ID */
+  entities?: Maybe<Array<Entity>>;
   /** Retrieve multiple newsEntries */
   newsEntries: Array<NewsEntry>;
   /** Retrieve multiple newsEntries using the Relay connection interface */
@@ -2786,6 +3558,44 @@ export type QueryAssetsConnectionArgs = {
 };
 
 
+export type QueryBioPhotoArgs = {
+  locales?: Array<Locale>;
+  stage?: Stage;
+  where: BioPhotoWhereUniqueInput;
+};
+
+
+export type QueryBioPhotoVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QueryBioPhotosArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<BioPhotoOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<BioPhotoWhereInput>;
+};
+
+
+export type QueryBioPhotosConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<BioPhotoOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<BioPhotoWhereInput>;
+};
+
+
 export type QueryDiscographyEntriesArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -2821,6 +3631,12 @@ export type QueryDiscographyEntryArgs = {
 
 export type QueryDiscographyEntryVersionArgs = {
   where: VersionWhereInput;
+};
+
+
+export type QueryEntitiesArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+  where: Array<EntityWhereInput>;
 };
 
 
@@ -3074,7 +3890,7 @@ export type RichText = {
 };
 
 /** Scheduled Operation system model */
-export type ScheduledOperation = Node & {
+export type ScheduledOperation = Entity & Node & {
   __typename?: 'ScheduledOperation';
   affectedDocuments: Array<ScheduledOperationAffectedDocument>;
   /** The time the document was created */
@@ -3155,7 +3971,7 @@ export type ScheduledOperationUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-export type ScheduledOperationAffectedDocument = Asset | DiscographyEntry | NewsEntry | SiteContent | Video;
+export type ScheduledOperationAffectedDocument = Asset | BioPhoto | DiscographyEntry | NewsEntry | SiteContent | Video;
 
 export type ScheduledOperationConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
@@ -3509,7 +4325,7 @@ export type ScheduledOperationWhereUniqueInput = {
 };
 
 /** Scheduled Release system model */
-export type ScheduledRelease = Node & {
+export type ScheduledRelease = Entity & Node & {
   __typename?: 'ScheduledRelease';
   /** The time the document was created */
   createdAt: Scalars['DateTime'];
@@ -4088,7 +4904,7 @@ export type ScheduledReleaseWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
-export type SiteContent = Node & {
+export type SiteContent = Entity & Node & {
   __typename?: 'SiteContent';
   content: RichText;
   /** The time the document was created */
@@ -4564,7 +5380,7 @@ export type UnpublishLocaleInput = {
 };
 
 /** User system model */
-export type User = Node & {
+export type User = Entity & Node & {
   __typename?: 'User';
   /** The time the document was created */
   createdAt: Scalars['DateTime'];
@@ -4969,7 +5785,7 @@ export type VersionWhereInput = {
   stage: Stage;
 };
 
-export type Video = Node & {
+export type Video = Entity & Node & {
   __typename?: 'Video';
   /** The time the document was created */
   createdAt: Scalars['DateTime'];
@@ -5536,6 +6352,14 @@ export type AboutQueryVariables = Exact<{
 
 export type AboutQuery = { __typename?: 'Query', siteContents: Array<{ __typename?: 'SiteContent', content: { __typename?: 'RichText', html: string, text: string } }> };
 
+export type BioPhotosQueryVariables = Exact<{
+  orderBy?: InputMaybe<BioPhotoOrderByInput>;
+  first?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type BioPhotosQuery = { __typename?: 'Query', bioPhotos: Array<{ __typename?: 'BioPhoto', photo?: { __typename?: 'Asset', url: string } | null }> };
+
 export type DiscographyEntriesQueryVariables = Exact<{
   orderBy?: InputMaybe<DiscographyEntryOrderByInput>;
 }>;
@@ -5579,6 +6403,15 @@ export const AboutDocument = gql`
     content {
       html
       text
+    }
+  }
+}
+    `;
+export const BioPhotosDocument = gql`
+    query bioPhotos($orderBy: BioPhotoOrderByInput, $first: Int) {
+  bioPhotos(orderBy: $orderBy, first: $first) {
+    photo {
+      url
     }
   }
 }
@@ -5635,6 +6468,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     about(variables?: AboutQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AboutQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<AboutQuery>(AboutDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'about', 'query');
+    },
+    bioPhotos(variables?: BioPhotosQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<BioPhotosQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<BioPhotosQuery>(BioPhotosDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'bioPhotos', 'query');
     },
     discographyEntries(variables?: DiscographyEntriesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DiscographyEntriesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DiscographyEntriesQuery>(DiscographyEntriesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'discographyEntries', 'query');
