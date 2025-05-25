@@ -26,7 +26,11 @@ const config = {
         protocol: 'https',
         hostname: '**.graphassets.com',
       },
+      {
+        protocol: "https",
+        hostname: "**.youtube.com",
+      },
     ],
-  }
+  },
 };
 export default config;

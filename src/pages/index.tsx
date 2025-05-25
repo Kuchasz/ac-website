@@ -1,4 +1,5 @@
 import { DisplayDiscographyEntry } from "~/components/display-discography-entry";
+import { LightboxImage } from "~/components/lightbox-image";
 import img1 from "../../public/landing_page/Andrew Core.jpg";
 import img2 from "../../public/landing_page/IMG_3796.jpg";
 import img3 from "../../public/landing_page/andrewcore22.png";
@@ -95,34 +96,34 @@ const Home = ({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             <div dangerouslySetInnerHTML={{ __html: bio }}></div>
             <div className="grid grid-cols-2 grid-rows-2">
-              <Image
+              <LightboxImage
                 className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
                 height={250}
                 width={250}
                 src={img1}
-                alt=""
-              ></Image>
-              <Image
+                alt="Andrew Core - Bio Photo 1"
+              ></LightboxImage>
+              <LightboxImage
                 className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
                 height={250}
                 width={250}
                 src={img2}
-                alt=""
-              ></Image>
-              <Image
+                alt="Andrew Core - Bio Photo 2"
+              ></LightboxImage>
+              <LightboxImage
                 className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
                 height={250}
                 width={250}
                 src={img3}
-                alt=""
-              ></Image>
-              <Image
+                alt="Andrew Core - Bio Photo 3"
+              ></LightboxImage>
+              <LightboxImage
                 className="h-full max-h-56 w-full rounded-lg object-cover object-center p-1"
                 height={250}
                 width={250}
                 src={img4}
-                alt=""
-              ></Image>
+                alt="Andrew Core - Bio Photo 4"
+              ></LightboxImage>
             </div>
           </div>
         </div>
@@ -196,10 +197,13 @@ const Home = ({
                   key={v.youtubeUrl}
                   href={`/video/${getYoutubeId(v.youtubeUrl)}`}
                 >
-                  <img
+                  <Image
                     className="max-w-[15rem] cursor-pointer brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0"
                     src={getThumbByVideoUrl(v.youtubeUrl)}
-                  ></img>
+                    alt={`YouTube video thumbnail`}
+                    width={240}
+                    height={180}
+                  />
                 </Link>
               ))}
             </div>
