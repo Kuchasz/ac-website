@@ -9,18 +9,19 @@ import {
   MouseParallaxChild,
   MouseParallaxContainer,
 } from "react-parallax-mouse";
+import { useGlitch } from "react-powerglitch";
 import { api } from "~/api";
 import {
-  BioPhoto,
+  type BioPhoto,
   BioPhotoOrderByInput,
   DiscographyEntryOrderByInput,
-  Language,
+  type Language,
   NewsEntryOrderByInput,
   VideoOrderByInput,
 } from "~/gql";
-import { NewsEntry } from "~/gql";
-import { Video } from "~/gql";
-import { DiscographyEntry } from "~/gql";
+import { type NewsEntry } from "~/gql";
+import { type Video } from "~/gql";
+import { type DiscographyEntry } from "~/gql";
 
 const Home = ({
   bio,
@@ -35,6 +36,30 @@ const Home = ({
   videos: Video[];
   news: NewsEntry[];
 }) => {
+
+  const imageGlitch = useGlitch({
+    timing: {
+      duration: 5000,
+      iterations: Infinity,
+    },
+    glitchTimeSpan: {
+      start: 0.2,
+      end: 0.4,
+    },
+    shake: {
+      velocity: 64,
+      amplitudeX: 0.1,
+      amplitudeY: 0.01,
+    },
+    slice: {
+      count: 64,
+      velocity: 12,
+      minHeight: 0.01,
+      maxHeight: 0.12,
+      hueRotate: true,
+    },
+  });
+
   return (
     <div className="flex w-full flex-col">
       <MouseParallaxContainer className="flex min-h-[100vh] w-full flex-col items-center justify-center bg-cover bg-top bg-no-repeat">
@@ -51,14 +76,25 @@ const Home = ({
             backgroundSize: "fill",
             backgroundRepeat: "repeat",
             backgroundPosition: "center",
-          }}
-        ></MouseParallaxChild>
+          }}>
+        </MouseParallaxChild>
+        <MouseParallaxChild
+          factorX={0.03}
+          factorY={0.01}
+          className="absolute flex h-full w-full items-center justify-center overflow-hidden"
+        >
+          <span className="whitespace-nowrap text-[100vh] font-black uppercase text-white opacity-5 select-none">
+            electronic music producer
+          </span>
+        </MouseParallaxChild>
         <MouseParallaxChild
           factorX={0.2}
           factorY={0.2}
           className="absolute grid h-full grid-rows-5 font-thin"
         >
-          <span className="row-start-2 translate-y-[-25%] animate-pulse text-6xl uppercase text-white opacity-10">
+          <span
+            className="row-start-2 translate-y-[-10%] animate-pulse text-6xl uppercase text-white opacity-10"
+          >
             electronic music producer
           </span>
         </MouseParallaxChild>
@@ -67,12 +103,14 @@ const Home = ({
           factorY={0.07}
           className="flex h-full items-end"
         >
-          <Image
-            alt="logo"
-            className="ml-48 max-h-[75vh] scale-125 object-contain"
-            height={800}
-            src={andrew}
-          ></Image>
+          <div ref={imageGlitch.ref} className="ml-48">
+            <Image
+              alt="logo"
+              className="max-h-[75vh] scale-125 object-contain"
+              height={800}
+              src={andrew}
+            ></Image>
+          </div>
         </MouseParallaxChild>
         <MouseParallaxChild factorX={0.05} factorY={0.05} className="absolute">
           <div className="grid grid-cols-3">
@@ -109,9 +147,6 @@ const Home = ({
             </div>
           </div>
         </div>
-
-
-
       </main >
       <main
         id="discography"
