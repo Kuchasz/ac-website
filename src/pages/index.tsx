@@ -10,6 +10,7 @@ import {
   MouseParallaxContainer,
 } from "react-parallax-mouse";
 import { useGlitch } from "react-powerglitch";
+import { Monda as Orbitron } from "next/font/google";
 import { api } from "~/api";
 import {
   type BioPhoto,
@@ -22,6 +23,12 @@ import {
 import { type NewsEntry } from "~/gql";
 import { type Video } from "~/gql";
 import { type DiscographyEntry } from "~/gql";
+
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-orbitron",
+});
 
 const Home = ({
   bio,
@@ -36,6 +43,30 @@ const Home = ({
   videos: Video[];
   news: NewsEntry[];
 }) => {
+
+  // Glitch effect for the smaller text
+  const textGlitch = useGlitch({
+    timing: {
+      duration: 3500,
+      iterations: Infinity,
+    },
+    glitchTimeSpan: {
+      start: 0.15,
+      end: 0.3,
+    },
+    shake: {
+      velocity: 8,
+      amplitudeX: 0.06,
+      amplitudeY: 0.04,
+    },
+    slice: {
+      count: 4,
+      velocity: 16,
+      minHeight: 0.1,
+      maxHeight: 0.2,
+      hueRotate: true,
+    },
+  });
 
   const imageGlitch = useGlitch({
     timing: {
@@ -83,20 +114,23 @@ const Home = ({
           factorY={0.01}
           className="absolute flex h-full w-full items-center justify-center overflow-hidden"
         >
-          <span className="whitespace-nowrap text-[100vh] font-black uppercase text-white opacity-5 select-none">
+          <span className={`whitespace-nowrap text-[100vh] font-black uppercase text-white opacity-5 select-none ${orbitron.className}`}>
             electronic music producer
           </span>
         </MouseParallaxChild>
         <MouseParallaxChild
           factorX={0.2}
           factorY={0.2}
-          className="absolute grid h-full grid-rows-5 font-thin"
+          className="absolute grid h-full grid-rows-5 animate-pulse font-thin opacity-20"
         >
-          <span
-            className="row-start-2 translate-y-[-10%] animate-pulse text-6xl uppercase text-white opacity-10"
-          >
-            electronic music producer
-          </span>
+          <div className="mt-64">
+            <span
+              className={`row-start-2 translate-y-[-10%] text-6xl text-white tracking-wider ${orbitron.className}`}
+              ref={textGlitch.ref}
+            >
+              Electronic Music Producer
+            </span>
+          </div>
         </MouseParallaxChild>
         <MouseParallaxChild
           factorX={0.07}
