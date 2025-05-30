@@ -10,7 +10,7 @@ import {
   MouseParallaxContainer,
 } from "react-parallax-mouse";
 import { useGlitch } from "react-powerglitch";
-import { Monda as Orbitron } from "next/font/google";
+import { Monda } from "next/font/google";
 import { api } from "~/api";
 import {
   type BioPhoto,
@@ -24,7 +24,7 @@ import { type NewsEntry } from "~/gql";
 import { type Video } from "~/gql";
 import { type DiscographyEntry } from "~/gql";
 
-const orbitron = Orbitron({
+const mondaFont = Monda({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-orbitron",
@@ -114,7 +114,7 @@ const Home = ({
           factorY={0.01}
           className="absolute flex h-full w-full items-center justify-center overflow-hidden"
         >
-          <span className={`whitespace-nowrap text-[100vh] font-black uppercase text-white opacity-5 select-none ${orbitron.className}`}>
+          <span className={`whitespace-nowrap text-[100vh] font-black uppercase text-white opacity-5 select-none ${mondaFont.className}`}>
             electronic music producer
           </span>
         </MouseParallaxChild>
@@ -125,7 +125,7 @@ const Home = ({
         >
           <div className="mt-64">
             <span
-              className={`row-start-2 translate-y-[-10%] text-6xl text-white tracking-wider ${orbitron.className}`}
+              className={`row-start-2 translate-y-[-10%] text-6xl text-white tracking-wider ${mondaFont.className}`}
               ref={textGlitch.ref}
             >
               Electronic Music Producer
