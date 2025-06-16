@@ -1,10 +1,9 @@
 import { type AppType } from "next/dist/shared/lib/utils";
 import Head from "next/head";
 
-import "~/styles/globals.css";
-import Image from "next/image";
 import Link from "next/link";
 import { ScrollLink } from "~/components/scroll-link";
+import "~/styles/globals.css";
 
 const menuItems = [
   { name: "bio", link: "/#bio" },  
@@ -58,7 +57,7 @@ const Social = () => (
   <div className="flex flex-row flex-wrap gap-6">
     {socialItems.map((mi) => (
       <Link key={mi.icon} href={mi.link}>
-        <Image alt="" src={mi.icon} width={20} height={20}></Image>
+        <img alt="" src={mi.icon} className="w-5 h-5" />
       </Link>
     ))}
   </div>

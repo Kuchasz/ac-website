@@ -1,9 +1,7 @@
-import Image from "next/image";
 import { useState, useEffect } from "react";
-import { type StaticImageData } from "next/image";
 
 interface LightboxImageProps {
-  src: string | StaticImageData;
+  src: string;
   alt: string;
   className?: string;
   width?: number;
@@ -47,14 +45,13 @@ export const LightboxImage = ({
   return (
     <>
       {/* Thumbnail Image */}
-      <Image
+      <img
         className={`cursor-pointer transition-all hover:opacity-80 ${className}`}
-        width={width}
-        height={height}
+        style={{ width, height }}
         src={src}
         alt={alt}
         onClick={openLightbox}
-        priority={priority}
+        loading={priority ? "eager" : "lazy"}
       />
 
       {/* Lightbox Modal */}
@@ -77,13 +74,11 @@ export const LightboxImage = ({
 
           {/* Full-size image */}
           <div className="relative max-h-[90vh] max-w-[90vw]">
-            <Image
+            <img
               src={src}
               alt={alt}
               className="max-h-[90vh] max-w-[90vw] object-contain"
-              width={1200}
-              height={1200}
-              priority
+              loading="eager"
             />
           </div>
 

@@ -13,7 +13,7 @@ const News = ({ news }: { news: NewsEntry }) => {
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
           {news?.title}
         </h1>
-        <div className="flex flex-col items-center">
+        <div className="max-w-5xl flex flex-col items-center">
           <img
             className="max-w-[10rem] object-cover brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0 md:max-w-[40rem]"
             src={news?.photo?.url}

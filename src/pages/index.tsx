@@ -1,7 +1,6 @@
 import { DisplayDiscographyEntry } from "~/components/display-discography-entry";
 import { LightboxImage } from "~/components/lightbox-image";
 import andrew from "../../public/landing_page/andrew.png";
-import Image from "next/image";
 import logoWhite from "../../public/logo_white.png";
 import { getThumbByVideoUrl, getYoutubeId } from "~/yt-helpers";
 import Link from "next/link";
@@ -138,22 +137,20 @@ const Home = ({
           className="flex h-full items-end"
         >
           <div ref={imageGlitch.ref} className="ml-48">
-            <Image
+            <img
               alt="logo"
               className="max-h-[75vh] scale-125 object-contain"
-              height={800}
-              src={andrew}
-            ></Image>
+              src={andrew.src}
+            />
           </div>
         </MouseParallaxChild>
         <MouseParallaxChild factorX={0.05} factorY={0.05} className="absolute">
           <div className="grid grid-cols-3">
-            <Image
+            <img
               alt="logo"
               className="col-start-2 max-h-[30vh] object-contain object-center"
-              height={500}
-              src={logoWhite}
-            ></Image>
+              src={logoWhite.src}
+            />
           </div>
         </MouseParallaxChild>
       </MouseParallaxContainer>
@@ -217,13 +214,11 @@ const Home = ({
                   href={`/news/${v.id}`}
                   className="my-4 flex flex-col items-center md:flex-row"
                 >
-                  <Image
+                  <img
                     className="mx-4 h-[250px] w-[250px] cursor-pointer object-cover brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0 md:max-w-[20rem]"
-                    width={250}
-                    height={250}
                     src={v.photo.url}
                     alt={""}
-                  ></Image>
+                  />
                   <div className="my-4 flex h-full flex-col justify-center">
                     <div className="text-lg">{v.title}</div>
                     <div className="max-w-xl overflow-hidden text-ellipsis text-xs">
@@ -251,12 +246,10 @@ const Home = ({
                   key={v.youtubeUrl}
                   href={`/video/${getYoutubeId(v.youtubeUrl)}`}
                 >
-                  <Image
+                  <img
                     className="max-w-[15rem] cursor-pointer brightness-50 grayscale transition-all hover:brightness-100 hover:grayscale-0"
                     src={getThumbByVideoUrl(v.youtubeUrl)}
                     alt={`YouTube video thumbnail`}
-                    width={240}
-                    height={180}
                   />
                 </Link>
               ))}
