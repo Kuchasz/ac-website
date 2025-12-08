@@ -15,9 +15,7 @@
     "react-dom": "19.2.1",
     "react-parallax-mouse": "^2.0.1",
     "react-powerglitch": "^1.1.0",
-    "zod": "^3.21.4"
-  },
-  "devDependencies": {
+    "zod": "^3.21.4",
     "@graphql-codegen/cli": "3.3.0",
     "@graphql-codegen/client-preset": "3.0.0",
     "@graphql-codegen/introspection": "3.0.1",
