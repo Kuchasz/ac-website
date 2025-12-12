@@ -26,6 +26,9 @@ importers:
       '@graphql-codegen/typescript-operations':
         specifier: 5.0.6
         version: 5.0.6(graphql@16.12.0)
+      '@next/env':
+        specifier: 16.0.10
+        version: 16.0.10
       '@types/eslint':
         specifier: ^8.21.3
         version: 8.56.12

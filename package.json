@@ -16,6 +16,7 @@
     "react-parallax-mouse": "^2.0.1",
     "react-powerglitch": "^1.1.0",
     "zod": "^3.21.4",
+    "@next/env": "16.0.10",
     "@graphql-codegen/cli": "6.1.0",
     "@graphql-codegen/client-preset": "5.2.1",
     "@graphql-codegen/introspection": "5.0.0",
